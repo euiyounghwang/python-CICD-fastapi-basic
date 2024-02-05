@@ -34,3 +34,53 @@ poetry add fastapi
 poetry add uvicorn
 poetry add pytz
 ```
+
+
+
+### Pytest
+- Docker with py.test
+```bash
+fn-flask-basic-api-test
+euiyoung/fn-flask-basic-api:test
+76ff0f2223a2
+15001:5001
+
+2024-01-27 22:23:54 ============================= test session starts ==============================
+2024-01-27 22:23:54 platform linux -- Python 3.6.13, pytest-7.0.1, pluggy-1.0.0 -- /usr/local/bin/python
+2024-01-27 22:23:54 cachedir: .pytest_cache
+2024-01-27 22:23:54 rootdir: /app/FN-BEES-Services/tests, configfile: pytest.ini
+2024-01-27 22:23:54 plugins: cov-4.0.0, mock-3.6.1
+2024-01-27 22:23:54 collecting ... collected 1 item
+2024-01-27 22:23:54 
+2024-01-27 22:23:55 tests/test_api.py::BaseTestAliveController::test_get_restful PASSED      [100%]
+2024-01-27 22:23:55 
+2024-01-27 22:23:55 ============================== 1 passed in 1.05s ===============================
+```
+- Go to virtual enviroment using `source .venv/bin/activate`
+- Run this command manually: `poetry run py.test -v --junitxml=test-reports/junit/pytest.xml --cov-report html --cov tests/` or `./pytest.sh`
+```bash
+➜  python-CICD-fastapi-basic git:(master) ✗ ./pytest.sh
+================================================ test session starts ================================================
+platform darwin -- Python 3.9.7, pytest-7.0.1, pluggy-0.13.1 -- /Users/euiyoung.hwang/opt/anaconda3/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/euiyoung.hwang/ES/Python_Workspace/python-CICD-fastapi-basic/tests, configfile: pytest.ini
+plugins: anyio-3.6.1, mock-3.6.1, cov-4.0.0
+collected 1 item                                                                                                    
+
+tests/test_api.py::test_api PASSED                                                                            [100%]
+
+================================================= 1 passed in 0.05s =================================================
+➜  python-CICD-fastapi-basic git:(master) ✗ source .venv/bin/activate
+(.venv) ➜  python-CICD-fastapi-basic git:(master) ✗ ./pytest.sh              
+================================================ test session starts ================================================
+platform darwin -- Python 3.9.7, pytest-7.0.1, pluggy-0.13.1 -- /Users/euiyoung.hwang/opt/anaconda3/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/euiyoung.hwang/ES/Python_Workspace/python-CICD-fastapi-basic/tests, configfile: pytest.ini
+plugins: anyio-3.6.1, mock-3.6.1, cov-4.0.0
+collected 1 item                                                                                                    
+
+tests/test_api.py::test_api PASSED                                                                            [100%]
+
+================================================= 1 passed in 0.12s =================================================
+(.venv) ➜  python-CICD-fastapi-basic git:(master) ✗ 
+```
