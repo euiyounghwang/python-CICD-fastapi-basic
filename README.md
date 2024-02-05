@@ -1,5 +1,5 @@
 # python-CICD-fastapi-basic
-python-fastapi-basic-CICD
+<i>python-fastapi-basic-CICD
 
 FastAPI is a modern, fast (high-performance), web framework for building APIs with Python 3.8+ based on standard Python type hints.
 
@@ -15,20 +15,18 @@ The key features are:
 - Standards-based: Based on (and fully compatible with) the open standards for APIs: OpenAPI (previously known as Swagger) and JSON Schema.
 
 
-I will use this project as a basic api to build a Docker Instance when testing on k8s
-
-Install Poerty
+### Install Poerty
 ```
 https://python-poetry.org/docs/?ref=dylancastillo.co#installing-with-the-official-installer
 ```
 
-Using Python Virtual Environment
+### Using Python Virtual Environment
 ```bash
 python -m venv .venv
 source .venv/bin/activate
 ```
 
-Using Poetry: Create the virtual environment in the same directory as the project and install the dependencies:
+### Using Poetry: Create the virtual environment in the same directory as the project and install the dependencies:
 ```bash
 poetry config virtualenvs.in-project true
 poetry init
