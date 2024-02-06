@@ -52,12 +52,12 @@ jobs:
           name: code-coverage-report
           path: htmlcov
 
-  # docker:
-  #   name: Build and Push to DockerHub
-  #   needs: test
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
+  docker:
+    name: Build and Push to DockerHub
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
 
   #     - name: Docker meta
   #       id: meta
