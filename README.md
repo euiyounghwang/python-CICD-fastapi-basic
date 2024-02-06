@@ -86,3 +86,7 @@ tests/test_api.py::test_api PASSED                                              
 curl -X POST -H 'Content-type: application/json' --data '{"text":"Hello, World!"}' <slack incomming URL>
 ```
 
+
+### Git Branch
+- git branch -D SEARCH-476
+- git push origin --delete SEARCH-476
