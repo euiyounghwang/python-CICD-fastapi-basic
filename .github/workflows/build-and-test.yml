@@ -125,7 +125,40 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         if: always() # Pick up events even if the job fails or is canceled.
 
-         
+      - name: Notify Slack on Failure
+        if: failure() # 이 step은 job이 실패한 경우에만 실행됩니다.
+        id: slack-failure
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          payload: |
+            {
+              "channel": "채널 ID",
+              "attachments": [
+                {
+                  "color": "#ff0000", # 실패시 빨간색
+                  "title": "${{ github.repository }}", 
+                  "title_link": "https://github.com/${{github.repository}}",
+                  "text": "GitHub Action 실패 :x:",
+                  "fields": [
+                    {
+                      "title": "Repository",
+                      "value": "${{ github.repository }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Tag",
+                      "value": "${{ github.ref_name }}",
+                      "short": true
+                    }
+                  ]      
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+      
+        
       # - name: Slack Notification
       #   uses: rtCamp/action-slack-notify@v2
       #   env:
