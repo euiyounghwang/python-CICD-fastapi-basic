@@ -1,0 +1,136 @@
+# Use the latest 2.1 version of CircleCI pipeline process engine.
+# See: https://circleci.com/docs/configuration-reference
+version: 2.1
+
+jobs:
+  build:
+    working_directory: ~/repo
+
+    # Env with docker for openjdk instead of debian-11
+    docker:
+      - image: cimg/base:2023.08
+      - image: circleci/postgres:12.0
+        environment:
+          # TEST_DATABASE_URL: postgresql://postgres:1234@localhost:5432/postgres
+          POSTGRES_USER: postgres
+          POSTGRES_DB: 1234
+          POSTGRES_HOST_AUTH_METHOD: trust
+          PGPORT: 15432
+#      - image: cimg/openjdk:11.0.12
+      # - image: cimg/python:3.10
+      - image: cimg/python:3.9.7
+      - image: circleci/buildpack-deps:stretch
+      - image: cimg/redis:6.2.6
+      - image: circleci/mongo:3.6
+        environment:
+          MONGODB_USERNAME: postgres
+          MONGODB_PASSWORD: 1234
+          
+    resource_class: large
+
+    environment:
+      TZ: "/usr/share/zoneinfo/UTC"
+      PKG_VERSION: git
+      CONDA_NUMBER_CHANNEL_NOTICES: 0
+      JVM_OPTS: -Xmx3200m
+      # IMAGE_NAME: euiyoung/fn-search-vector-api
+      POETRY_VERSION: 1.6.0
+
+    steps:
+      - checkout
+
+      - run:
+          name: Install OpenJDK 11
+          command: |
+            sudo apt-get update && sudo apt-get install openjdk-11-jdk
+            sudo update-alternatives --set java /usr/lib/jvm/java-11-openjdk-amd64/bin/java
+            sudo update-alternatives --set javac /usr/lib/jvm/java-11-openjdk-amd64/bin/javac
+            java -version
+
+      - run:
+          name: Install ElasticSearch 7
+          command: |
+            wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.13.0-linux-x86_64.tar.gz
+            tar -xzf elasticsearch-7.13.0-linux-x86_64.tar.gz
+            sudo elasticsearch-7.13.0/bin/elasticsearch-plugin install analysis-stempel;
+            sudo elasticsearch-7.13.0/bin/elasticsearch-plugin install analysis-ukrainian;
+            sudo elasticsearch-7.13.0/bin/elasticsearch-plugin install analysis-smartcn;
+            sudo elasticsearch-7.13.0/bin/elasticsearch-plugin install analysis-phonetic;
+            sudo elasticsearch-7.13.0/bin/elasticsearch-plugin install analysis-icu;
+
+      - run:
+          name: Start Elasticsearch 7
+          command: |
+            ES_JAVA_OPTS="-Xms1g -Xmx1g" elasticsearch-7.13.0/bin/elasticsearch -E http.port=9209
+          background: true
+          
+          
+      - run:
+          name: Install Conda
+          command: |
+            if [ ! -e conda ]; then
+            wget https://repo.continuum.io/miniconda/Miniconda3-4.7.12.1-Linux-x86_64.sh
+            bash Miniconda3-4.7.12.1-Linux-x86_64.sh -b -p conda
+            echo 'conda==4.7.12' > conda/conda-meta/pinned
+
+            # Do a flexible solve from the getgo
+            conda/bin/conda config --set channel_priority flexible
+
+            # Install boto
+            conda/bin/conda install -y boto3=1.9.7
+            fi
+
+      - run:
+          name: Install Dependencies
+          command: |
+            conda/bin/conda create --yes --quiet --name python-fasapi-gha python=3.9
+            source conda/bin/activate python-fasapi-gha && pip install poetry==$POETRY_VERSION
+            poetry install --no-root
+
+      - run:
+          name: tests
+          command: |
+            source conda/bin/activate python-fasapi-gha &&
+            # poetry run python -m py.test -v rest_api/tests --cov --disable-warnings
+            poetry run pytest -v rest_api/tests --cov-report term-missing --cov
+   
+  
+#   publish-latest:
+
+#     environment:
+#       IMAGE_NAME: euiyoung/fn-django-search-api
+
+#     docker:
+#       - image: circleci/buildpack-deps:stretch
+
+#     steps:
+#       - checkout
+#       - setup_remote_docker:
+#           docker_layer_caching: true
+
+#       - run:
+#           name: Build Docker image
+#           command:
+#             docker build -t $IMAGE_NAME:es . --target runtime
+
+#       - run:
+#           name: Publish Docker Image to Docker Hub
+#           command: |
+#             echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+#             docker push $IMAGE_NAME:es
+
+
+# workflows:
+#   version: 2
+#   build-master:
+#     jobs:
+#       - build:
+#           filters:
+#             branches:
+#               only: master
+#       - publish-latest:
+#           requires:
+#             - build
+#           filters:
+#             branches:
+#               only: master
