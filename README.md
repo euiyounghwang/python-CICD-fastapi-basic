@@ -1,6 +1,8 @@
 # python-CICD-fastapi-basic
 <i>python-fastapi-basic-CICD
 
+![Alt text](./screenshots/GHA.png)
+
 FastAPI is a modern, fast (high-performance), web framework for building APIs with Python 3.8+ based on standard Python type hints.
 
 The key features are:
