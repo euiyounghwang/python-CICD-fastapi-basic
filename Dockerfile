@@ -30,6 +30,19 @@ RUN /bin/bash -c 'source $POETRY_VENV/bin/activate && \
     poetry install --no-root'
 
 
+# Build Elasticsearch 7 image
+FROM docker.elastic.co/elasticsearch/elasticsearch:7.10.2 as omni_es
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN elasticsearch-plugin install analysis-stempel
+RUN elasticsearch-plugin install analysis-ukrainian
+RUN elasticsearch-plugin install analysis-smartcn
+RUN elasticsearch-plugin install analysis-phonetic
+RUN elasticsearch-plugin install analysis-icu
+
+EXPOSE 9201
+
 
 FROM --platform=linux/amd64 python:3.9.7 as runtime
 
