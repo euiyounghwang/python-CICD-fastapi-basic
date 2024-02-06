@@ -108,7 +108,7 @@ jobs:
   #         tags: ${{ steps.meta.outputs.tags }}
   #         labels: ${{ steps.meta.outputs.labels }}
 
-  alert:
+    alert:
     name: Alerts
     needs: docker
     runs-on: ubuntu-latest
