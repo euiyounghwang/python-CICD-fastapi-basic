@@ -76,3 +76,13 @@ tests/test_api.py::test_api PASSED                                              
 ### CI/CD Environment
 - CircleCI (`./circleci/config.yml`): CircleCI is a continuous integration and continuous delivery platform that helps software teams work smarter, faster. With CircleCI, every commit kicks off a new job in our platform, and code is built, tested, and deployed. 
 - Github Actions (`./.github/workflows/build-and-test.yml`) : GitHub Actions is a continuous integration and continuous delivery (CI/CD) platform that allows you to automate your build, test, and deployment pipeline. You can create workflows that build and test every pull request to your repository, or deploy merged pull requests to production.
+
+
+### Slack for alert through Github Actions
+- Slack for app (<i>https://velog.io/@devand/%EC%8A%AC%EB%9E%99-Web-API-%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%B4%EB%B3%B4%EC%9E%90-1</i>)
+- create app to slack (https://api.slack.com/apps)
+- Permission for new app user : Features > OAuth & Permissions (incoming-webhook, chat:write, groups:write for secrets)
+```bash
+curl -X POST -H 'Content-type: application/json' --data '{"text":"Hello, World!"}' <slack incomming URL>
+```
+

@@ -1,9 +1,4 @@
 
-# https://velog.io/@devand/%EC%8A%AC%EB%9E%99-Web-API-%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%B4%EB%B3%B4%EC%9E%90-1
-# create app to slack (https://api.slack.com/apps)
-# Permission for new app user : Features > OAuth & Permissions (incoming-webhook, chat:write, groups:write for secrets)
-# curl -X POST -H 'Content-type: application/json' --data '{"text":"Hello, World!"}' <slack incomming URL>
-
 name: Build and Test
 
 # on:
@@ -13,9 +8,12 @@ name: Build and Test
 
 on:
   push:
-    branches: ["master"]
+    # branches:
+    #   - dev
+    #   - feature/*
+    branches: ["dev", "feature/*"]
   pull_request:
-    branches: ["master"]
+    branches: ["dev", "feature/*"]
     
 jobs:
 
