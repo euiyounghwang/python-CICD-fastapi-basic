@@ -65,3 +65,8 @@ tests/test_api.py::test_api PASSED                                              
 ================================================= 1 passed in 0.12s =================================================
 (.venv) ➜  python-CICD-fastapi-basic git:(master) ✗ 
 ```
+
+
+### CI/CD Environment
+- CircleCI (`./circleci/config.yml`): CircleCI is a continuous integration and continuous delivery platform that helps software teams work smarter, faster. With CircleCI, every commit kicks off a new job in our platform, and code is built, tested, and deployed. 
+- Github Actions (`./.github/workflows/build-and-test.yml`) : GitHub Actions is a continuous integration and continuous delivery (CI/CD) platform that allows you to automate your build, test, and deployment pipeline. You can create workflows that build and test every pull request to your repository, or deploy merged pull requests to production.
