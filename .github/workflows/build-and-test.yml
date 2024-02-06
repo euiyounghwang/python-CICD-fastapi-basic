@@ -6,14 +6,15 @@ name: Build and Test
 #   push:
 #     branches-ignore:  [dev, master]
 
+
 on:
   push:
     # branches:
     #   - dev
     #   - feature/*
-    branches: ["dev", "feature/*"]
+    branches: ["dev", "master", "feature/*"]
   pull_request:
-    branches: ["dev", "feature/*"]
+    branches: ["dev", "master", "feature/*"]
     
 jobs:
 
