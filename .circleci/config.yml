@@ -91,15 +91,15 @@ jobs:
           name: tests
           command: |
             source conda/bin/activate python-fasapi-gha &&
-            # poetry run python -m py.test -v rest_api/tests --cov --disable-warnings
-            poetry run pytest -v rest_api/tests --cov-report term-missing --cov
+            # poetry run python -m py.test -v tests --cov --disable-warnings
+            poetry run pytest -v tests --cov-report term-missing --cov
    
   
   
 #   publish-latest:
 
 #     environment:
-#       IMAGE_NAME: euiyoung/fn-django-search-api
+#       IMAGE_NAME: euiyoung/fn-python-fastapi-gha
 
 #     docker:
 #       - image: circleci/buildpack-deps:stretch
