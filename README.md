@@ -36,6 +36,9 @@ poetry init
 poetry add fastapi
 poetry add uvicorn
 poetry add pytz
+poetry add httpx
+poetry add pytest
+poetry add pytest-cov
 ```
 
 
