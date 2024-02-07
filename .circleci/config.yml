@@ -125,10 +125,11 @@ workflows:
   version: 2
   build-master:
     jobs:
-      - build:
-          filters:
-            branches:
-              only: master
+      - build
+      # - build:
+      #     filters:
+      #       branches:
+      #         only: master
       - publish-latest:
           requires:
             - build

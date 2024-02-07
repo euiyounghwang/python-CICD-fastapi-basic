@@ -79,6 +79,7 @@ jobs:
 
   build-docker:
     name: Build and Push to DockerHub
+    if: github.ref == 'refs/heads/master'
     needs: build-tests
     runs-on: ubuntu-latest
     steps:
