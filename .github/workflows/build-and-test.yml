@@ -116,6 +116,7 @@ jobs:
     name: Slack-Alerts
     needs: build-docker
     # if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    if: github.ref == 'refs/heads/dev'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
