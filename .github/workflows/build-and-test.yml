@@ -33,7 +33,7 @@ jobs:
           --health-retries 10
           
     name: Build and tests
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, ubuntu-latest]
     steps:
       - uses: actions/checkout@v3
 
