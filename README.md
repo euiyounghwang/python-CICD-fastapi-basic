@@ -29,6 +29,7 @@ python -m venv .venv
 source .venv/bin/activate
 ```
 
+
 ### Using Poetry: Create the virtual environment in the same directory as the project and install the dependencies:
 ```bash
 poetry config virtualenvs.in-project true
