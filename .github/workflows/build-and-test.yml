@@ -65,6 +65,14 @@ jobs:
           host node port: 9300
           node port: 9300
           discovery type: "single-node"
+          plugins: |
+            analysis-icu
+            analysis-smartcn
+            analysis-kuromoji
+            analysis-stempel
+            analysis-ukrainian
+            analysis-phonetic
+      
       
       - name: Elasticsearch is reachable
         run: |
@@ -78,8 +86,7 @@ jobs:
           driver-opts: |
             image=moby/buildkit:master
             network=bridge
-        
-           
+            
       - name: Run tests
         id: Build-tests
         run: poetry run pytest -sv ./tests
