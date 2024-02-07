@@ -111,30 +111,23 @@ jobs:
   alert:
     name: Alerts
     needs: docker
+    # if: ${{ github.event.workflow_run.conclusion == 'failure' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       
-      # - name: Post to a Slack channel
-      #   uses: 8398a7/action-slack@v3
-      #   with:
-      #     status: ${{ job.status }} 
-      #     author_name: Montoring-Slack from GitHub Actions
-      #     fields: repo,message,commit,author,action,eventName,ref,workflow,took # selectable (default: repo,commit,message,author)\
-      #     mention: here
-      #     if_mention: failure,cancelled
-      #   env:
-      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      #   if: always() # Pick up events even if the job fails or is canceled.
-      
       - name: Post to a Slack channel
-        uses: abinoda/slack-action@master
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        uses: 8398a7/action-slack@v3
         with:
-        # message to send to slack
-          args: '{\"channel\":\"#alert\",\"blocks\":[{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"*Repository pushed to:* ${{ github.event.repository.name }}\"}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"*Pusher:* ${{ github.event.pusher.name }}\n*Commit Message:* ${{ github.event.head_commit.message }}\"}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"<${{ github.event.repository.html_url }}|View Repository>\"}}]}' 
-        if: success()
+          status: ${{ job.status }} 
+          author_name: Montoring-Slack from GitHub Actions
+          fields: repo,message,commit,author,action,eventName,ref,workflow,took # selectable (default: repo,commit,message,author)\
+          mention: here
+          if_mention: failure,cancelled
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: always() # Pick up events even if the job fails or is canceled.
+      
         
       # - name: Slack Notification
       #   uses: rtCamp/action-slack-notify@v2
@@ -146,3 +139,4 @@ jobs:
       #     SLACK_TITLE: Post Title
       #     SLACK_USERNAME: alert
       #     SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+      
