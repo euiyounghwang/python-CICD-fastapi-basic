@@ -30,30 +30,10 @@ jobs:
 
       - uses: actions/setup-python@v4
         with:
-          python-version: 3.11
-          cache: poetry
-
-      - name: Install Python dependencies
-        run: poetry install
-
-
-  test:
-    name: Run tests
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Install poetry
-        id: Build-Poetry-for-tests
-        run: pipx install poetry
-
-      - uses: actions/setup-python@v4
-        with:
           python-version: 3.9
           cache: poetry
 
-      - name: Install dependencies
+      - name: Install Python dependencies
         run: poetry install
         
       - name: Build Image for ES7
@@ -68,6 +48,26 @@ jobs:
           # push: false
           # load: true
 
+
+  test:
+    name: Run tests
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      # - name: Install poetry
+      #   id: Build-Poetry-for-tests
+      #   run: pipx install poetry
+
+      # - uses: actions/setup-python@v4
+      #   with:
+      #     python-version: 3.9
+      #     cache: poetry
+
+      # - name: Install dependencies
+      #   run: poetry install
+        
       - name: Run ES7
         run: |
           docker run --name bees-omnisearch-es7 -d --publish 9201:9201 --expose 9201 -e node.name=fn-dm-bees-omni-data-01 -e discovery.type=single-node -e http.port=9201 -e http.cors.enabled=true -e http.cors.allow-origin=* -e http.cors.allow-headers=X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization -e http.cors.allow-credentials=true -e xpack.security.enabled=false -e bootstrap.system_call_filter=false -e ES_JAVA_OPTS="-Xms1g -Xmx1g" bees-omnisearch-es7:omni_es
