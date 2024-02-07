@@ -49,23 +49,50 @@ jobs:
       - name: Install Python dependencies
         run: poetry install
         
+      # - name: Configure sysctl limits
+      #   run: |
+      #     sudo swapoff -a
+      #     sudo sysctl -w vm.swappiness=1
+      #     sudo sysctl -w fs.file-max=262144
+      #     sudo sysctl -w vm.max_map_count=262144
+    
+      # - uses: dreamsofimran/elasticsearch-action@v1.0
+      #   with:
+      #     elasticsearch version: "8.8.0"
+      #     cluster name: docker-elasticsearch
+      #     host port: 9209
+      #     container port: 9200
+      #     host node port: 9300
+      #     node port: 9300
+      #     discovery type: "single-node"
+      
+      
       - name: Configure sysctl limits
         run: |
           sudo swapoff -a
           sudo sysctl -w vm.swappiness=1
           sudo sysctl -w fs.file-max=262144
           sudo sysctl -w vm.max_map_count=262144
-    
-      - uses: dreamsofimran/elasticsearch-action@v1.0
+
+      - name: Start Elasticsearch
+        uses: ./
         with:
-          elasticsearch version: "8.8.0"
-          cluster name: docker-elasticsearch
-          host port: 9209
-          container port: 9200
-          host node port: 9300
-          node port: 9300
-          discovery type: "single-node"
-      
+          version: 7.6.1
+          plugins: |
+            # https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v7.6.1/elasticsearch-analysis-ik-7.6.1.zip
+            analysis-icu
+            analysis-smartcn
+            analysis-kuromoji
+            analysis-stempel
+            analysis-ukrainian
+            analysis-phonetic
+                        
+
+      - name: Elasticsearch is reachable
+        run: |
+          curl --verbose --show-error http://localhost:9209
+        
+        
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
         with:
