@@ -64,7 +64,7 @@ docker run \
   --retry-connrefused \
   --show-error \
   --silent \
-  http://es1:9209/_cat/plugins
+  http://es1:9200/_cat/plugins
 
 exit_status=$?
 if [ $exit_status -eq 0 ]; then
