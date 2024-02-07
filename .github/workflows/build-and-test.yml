@@ -19,7 +19,7 @@ on:
 jobs:
 
   build-tests:
-    name: Install Dependency with Poetry
+    name: Install Dependency & Tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -57,7 +57,7 @@ jobs:
 
       - name: Run tests
         id: Build-tests
-        run: poetry run pytest -sv ./tests
+        run: poetry run pytest -sv ./tests1
 
       - name: Archive code coverage results
         uses: actions/upload-artifact@v3
@@ -75,7 +75,6 @@ jobs:
           notification_title: "{workflow} is failing"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: always()
           
 
   build-docker:
@@ -117,7 +116,6 @@ jobs:
           notification_title: "{workflow} is failing"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: always()
     
 
   success_notification:
