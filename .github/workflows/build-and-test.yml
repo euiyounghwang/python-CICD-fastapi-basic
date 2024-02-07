@@ -65,7 +65,10 @@ jobs:
       #     host node port: 9300
       #     node port: 9300
       #     discovery type: "single-node"
-          
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      
       - name: Build Image for ES7
         id: Build-elasticsearch
         uses: docker/build-push-action@v4
@@ -78,7 +81,7 @@ jobs:
           # build-args: AWS_ECR_ACCOUNT_URL=${{ vars.FN_ECR_REGISTRY_URL }}
           push: false
           load: true
-             
+        
       - name: Run ES7
         uses: docker/build-push-action@v4
         with:
