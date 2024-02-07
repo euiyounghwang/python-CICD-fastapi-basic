@@ -41,7 +41,7 @@ RUN elasticsearch-plugin install analysis-smartcn
 RUN elasticsearch-plugin install analysis-phonetic
 RUN elasticsearch-plugin install analysis-icu
 
-EXPOSE 9201
+EXPOSE 9209
 
 
 FROM --platform=linux/amd64 python:3.9.7 as runtime
