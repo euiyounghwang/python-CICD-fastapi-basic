@@ -47,6 +47,17 @@ jobs:
           # build-args: AWS_ECR_ACCOUNT_URL=${{ vars.FN_ECR_REGISTRY_URL }}
           # push: false
           # load: true
+          
+      - name: Post to a Slack channel
+        uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+          channel: '#alert'
+          notify_when: 'failure'
+          notification_title: "{workflow} is failing"
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
 
   test:
@@ -92,10 +103,9 @@ jobs:
           steps: ${{ toJson(steps) }}
           channel: '#alert'
           notify_when: 'failure'
+          notification_title: "{workflow} is failing"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: always()
-          
           
 
   build-docker:
@@ -126,8 +136,20 @@ jobs:
   #         push: ${{ github.event_name != 'pull_request' }}
   #         tags: ${{ steps.meta.outputs.tags }}
   #         labels: ${{ steps.meta.outputs.labels }}
+  
+      - name: Post to a Slack channel
+        uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+          channel: '#alert'
+          notify_when: 'failure'
+          notification_title: "{workflow} is failing"
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    
 
-  alert:
+  success_notification:
     name: Slack-Alerts
     needs: build-docker
     # if: ${{ github.event.workflow_run.conclusion == 'failure' }}
