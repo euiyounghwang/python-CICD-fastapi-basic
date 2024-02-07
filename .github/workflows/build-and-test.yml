@@ -85,14 +85,18 @@ jobs:
           name: code-coverage-report
           path: htmlcov
           
-      - name: Report Status
-        if: always()
-        uses: ravsamhq/notify-slack-action@master
+      - name: Post to a Slack channel
+        uses: act10ns/slack@v1
         with:
           status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+          channel: '#alert'
           notify_when: 'failure'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: always()
+          
+          
 
   build-docker:
     name: Build and Push to DockerHub
