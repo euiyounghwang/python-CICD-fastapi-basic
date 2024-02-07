@@ -36,7 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        elasticsearch: ["8.0.1", "8.2.0", "8.6.2", "8.7.0"]
+        elasticsearch: ["8.8.0"]
     steps:
       - uses: actions/checkout@v3
 

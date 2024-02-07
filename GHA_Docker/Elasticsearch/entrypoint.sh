@@ -41,7 +41,7 @@ docker run \
   --env "http.port=9200" \
   --ulimit nofile=65536:65536 \
   --ulimit memlock=-1:-1 \
-  --publish "9200:9200" \
+  --publish "9209:9200" \
   --network=elastic \
   --name="es1" \
   --detach \
@@ -64,7 +64,7 @@ docker run \
   --retry-connrefused \
   --show-error \
   --silent \
-  http://es1:9200/_cat/plugins
+  http://es1:9209/_cat/plugins
 
 exit_status=$?
 if [ $exit_status -eq 0 ]; then
