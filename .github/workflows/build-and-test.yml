@@ -56,18 +56,22 @@ jobs:
           sudo sysctl -w fs.file-max=262144
           sudo sysctl -w vm.max_map_count=262144
     
-      - name: Install Elastisearch
-        uses: dreamsofimran/elasticsearch-action@v1.0
-        with:
-          elasticsearch version: "8.8.0"
-          cluster name: docker-elasticsearch
-          host port: 9209
-          container port: 9200
-          host node port: 9300
-          node port: 9300
-          discovery type: "single-node"
+      # - name: Install Elastisearch
+      #   uses: dreamsofimran/elasticsearch-action@v1.0
+      #   with:
+      #     elasticsearch version: "8.8.0"
+      #     cluster name: docker-elasticsearch
+      #     host port: 9209
+      #     container port: 9200
+      #     host node port: 9300
+      #     node port: 9300
+      #     discovery type: "single-node"
        
-          
+      - name: Start Elasticsearch
+        uses: ./GHA_Docker/Elasticsearch
+        with:
+          stack-version: ${{ matrix.elasticsearch }}
+            
       - name: Elasticsearch is reachable
         run: |
           curl --verbose --show-error http://localhost:9209

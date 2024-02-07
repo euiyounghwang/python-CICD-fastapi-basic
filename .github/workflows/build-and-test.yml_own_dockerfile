@@ -49,23 +49,6 @@ jobs:
       - name: Install Python dependencies
         run: poetry install
         
-      # - name: Configure sysctl limits
-      #   run: |
-      #     sudo swapoff -a
-      #     sudo sysctl -w vm.swappiness=1
-      #     sudo sysctl -w fs.file-max=262144
-      #     sudo sysctl -w vm.max_map_count=262144
-    
-      # - uses: dreamsofimran/elasticsearch-action@v1.0
-      #   with:
-      #     elasticsearch version: "8.8.0"
-      #     cluster name: docker-elasticsearch
-      #     host port: 9209
-      #     container port: 9200
-      #     host node port: 9300
-      #     node port: 9300
-      #     discovery type: "single-node"
-      
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
         with:
@@ -101,8 +84,9 @@ jobs:
               done
         shell: bash
         
-      # - name: get the stats
-      #   run: curl -X Get "http://localhost:9209/_cluster/stats?pretty=true"
+      - name: Elasticsearch is reachable
+        run: |
+          curl --verbose --show-error http://localhost:9209
             
       - name: Run tests
         id: Build-tests
