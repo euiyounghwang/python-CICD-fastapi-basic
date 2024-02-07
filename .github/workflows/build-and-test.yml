@@ -61,7 +61,7 @@ jobs:
     
      
       - name: Start Elasticsearch
-        uses: ./GHA_Docker/Elasticsearch
+        uses: ./.gha/Docker/Elasticsearch
         # with:
         #   stack-version: ${{ matrix.elasticsearch }}
             
