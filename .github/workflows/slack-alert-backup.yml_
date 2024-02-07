@@ -15,16 +15,26 @@ jobs:
     steps:
         - uses: actions/checkout@v3
         - name: Post to a Slack channel
-          uses: 8398a7/action-slack@v3
-          with:
-            status: ${{ job.status }} 
-            author_name: Montoring-Slack from GitHub Actions
-            fields: repo,message,commit,author,action,eventName,ref,workflow,took # selectable (default: repo,commit,message,author)\
-            mention: here
-            if_mention: failure,cancelled
-          env:
-            SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-          if: always() # Pick up events even if the job fails or is canceled.
+        uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+          channel: '#alert'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: always()
+        
+        # - name: Post to a Slack channel
+        #   uses: 8398a7/action-slack@v3
+        #   with:
+        #     status: ${{ job.status }} 
+        #     author_name: Montoring-Slack from GitHub Actions
+        #     fields: repo,message,commit,author,action,eventName,ref,workflow,took # selectable (default: repo,commit,message,author)\
+        #     mention: here
+        #     if_mention: failure,cancelled
+        #   env:
+        #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        #   if: always() # Pick up events even if the job fails or is canceled.
           
               
         # - name: Slack Notification
