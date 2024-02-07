@@ -18,7 +18,7 @@ on:
     
 jobs:
 
-  code-quality:
+  build:
     name: Install Dependency with Poetry
     runs-on: ubuntu-latest
     steps:
@@ -38,7 +38,7 @@ jobs:
 
   test:
     name: Run tests
-    needs: code-quality
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
