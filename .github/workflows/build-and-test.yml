@@ -70,11 +70,6 @@ jobs:
           curl --verbose --show-error http://localhost:9209
       
                       
-      - name: Elasticsearch is reachable
-        run: |
-          curl --verbose --show-error http://localhost:9201
-          
-          
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
         with:
