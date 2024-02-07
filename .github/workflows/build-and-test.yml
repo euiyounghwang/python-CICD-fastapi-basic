@@ -93,6 +93,8 @@ jobs:
         with:
           run: |
             docker run --name bees-omnisearch-es7 -d --network bridge --publish 9209:9201 --expose 9201 -e node.name=fn-dm-bees-omni-data-01 -e discovery.type=single-node -e http.port=9201 -e http.cors.enabled=true -e http.cors.allow-origin=* -e http.cors.allow-headers=X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization -e http.cors.allow-credentials=true -e xpack.security.enabled=false -e bootstrap.system_call_filter=false -e ES_JAVA_OPTS="-Xms1g -Xmx1g" bees-omnisearch-es7:omni_es
+            docker restart bees-omnisearch-es7
+            sleep 10
 
       - name: Elasticsearch is reachable
         run: |
