@@ -86,7 +86,7 @@ jobs:
           # build-args: AWS_ECR_ACCOUNT_URL=${{ vars.FN_ECR_REGISTRY_URL }}
           push: false
           load: true
-        
+                  
       - name: Run ES7
         uses: docker/build-push-action@v4
         with:
@@ -95,7 +95,7 @@ jobs:
 
       - name: Wait for server to be ready
         run: |
-              while ! curl -s http://localhost:9209 > /dev/null; do
+              while ! curl -s http://host.docker.internal:9209 > /dev/null; do
                 echo "Waiting for server..."
                 sleep 5
               done
