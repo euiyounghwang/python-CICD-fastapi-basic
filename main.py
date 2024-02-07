@@ -34,7 +34,7 @@ async def info():
          description="Default GET API", 
          summary="Return Json")
 async def get_es_info():
-    logger.info('root')
+    logger.info('get_es_info')
     response = requests.get("http://localhost:9209/_cluster/health")
     return response.json()
 
