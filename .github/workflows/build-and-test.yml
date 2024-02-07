@@ -58,6 +58,7 @@ jobs:
           notification_title: "{workflow} is failing"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: always()
 
 
   test:
@@ -106,6 +107,7 @@ jobs:
           notification_title: "{workflow} is failing"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: always()
           
 
   build-docker:
@@ -147,6 +149,7 @@ jobs:
           notification_title: "{workflow} is failing"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: always()
     
 
   success_notification:
