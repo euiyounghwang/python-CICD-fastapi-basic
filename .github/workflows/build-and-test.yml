@@ -70,6 +70,7 @@ jobs:
         id: Build-elasticsearch
         uses: docker/build-push-action@v4
         with:
+          context: .
           target: omni_es
           tags: bees-omnisearch-es7:omni_es
           # cache-from: type=gha
