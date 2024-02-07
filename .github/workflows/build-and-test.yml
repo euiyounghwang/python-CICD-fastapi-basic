@@ -77,7 +77,7 @@ jobs:
       
       - name: Elasticsearch is reachable
         run: |
-          curl --verbose --show-error http://localhost:9209
+          # curl --verbose --show-error http://localhost:9209
           curl --verbose --show-error http://localhost:9209/_cat/plugins
         
         
