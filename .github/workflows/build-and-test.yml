@@ -68,12 +68,14 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           run: |
-            docker run --name bees-omnisearch-es7 -d --publish 9209:9209 --expose 9209 -e node.name=fn-dm-bees-omni-data-01 -e discovery.type=single-node -e http.port=9209 -e http.cors.enabled=true -e http.cors.allow-origin=* -e http.cors.allow-headers=X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization -e http.cors.allow-credentials=true -e xpack.security.enabled=false -e bootstrap.system_call_filter=false -e ES_JAVA_OPTS="-Xms1g -Xmx1g" bees-omnisearch-es7:omni_es
+            docker run --name bees-omnisearch-es7 -d --publish 9209:9201 --expose 9201 -e node.name=fn-dm-bees-omni-data-01 -e discovery.type=single-node -e http.port=9201 -e http.cors.enabled=true -e http.cors.allow-origin=* -e http.cors.allow-headers=X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization -e http.cors.allow-credentials=true -e xpack.security.enabled=false -e bootstrap.system_call_filter=false -e ES_JAVA_OPTS="-Xms1g -Xmx1g" bees-omnisearch-es7:omni_es
 
-          
+      - name: get the stats
+        run: curl -X Get "localhost:9209/_cluster/stats?pretty=true"
+                
       - name: Wait for server to be ready
         run: |
-              while ! curl -s http://bees-omnisearch-es7:9209 > /dev/null; do
+              while ! curl -s http://localhost:9209 > /dev/null; do
                 echo "Waiting for server..."
                 sleep 5
               done
