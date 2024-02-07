@@ -73,11 +73,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
         with:
-          driver: docker-container
-          driver-opts: |
-            image=moby/buildkit:master
-            network=elastic
-            
+          driver: docker-container            
             
       - name: Build Image for ES7
         id: Build-elasticsearch
