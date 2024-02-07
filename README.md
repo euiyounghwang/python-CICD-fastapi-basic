@@ -40,6 +40,7 @@ poetry add pytz
 poetry add httpx
 poetry add pytest
 poetry add pytest-cov
+poetry add requests
 ```
 
 

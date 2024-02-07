@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 from config.log_config import create_log
+import requests
+
 
 logger = create_log()
 app = FastAPI()
@@ -24,6 +26,17 @@ app.add_middleware(
 async def info():
     logger.info('root')
     return {"name": "python-CICD-sample-fast-api", "version": "1.0.0"}
+
+
+
+@app.get("/es", tags=['API'],  
+         status_code=200,
+         description="Default GET API", 
+         summary="Return Json")
+async def get_es_info():
+    logger.info('root')
+    response = requests.get("http://localhost:9209/_cluster/health")
+    return response.json()
 
 
 @app.get("/test", tags=['API'],  

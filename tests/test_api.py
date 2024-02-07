@@ -13,3 +13,10 @@ def test_api(mock_client):
     assert response is not None
     assert response.status_code == 200
     assert response.json() == {f"message": "Hello World [1]"}
+    
+    
+def test_elasticsearch_api(mock_client):
+    response = mock_client.get("/es")
+    assert response is not None
+    assert response.status_code == 200
+    assert response.json()['status'] == "yellow"
