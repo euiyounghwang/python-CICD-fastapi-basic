@@ -25,7 +25,7 @@ jobs:
           discovery.type: single-node
         ports:
             # <port on host>:<port on container>
-            - 9209:9200
+          - 9209:9200
         options: >-
           --health-cmd "curl http://localhost:9209/_cluster/health"
           --health-interval 10s
@@ -33,7 +33,7 @@ jobs:
           --health-retries 10
           
     name: Build and tests
-    runs-on: [self-hosted, ubuntu-latest]
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
