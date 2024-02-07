@@ -46,7 +46,8 @@ docker run \
   --name="es1" \
   --detach \
   -v /elasticsearch/plugins:/usr/share/elasticsearch/plugins \
-  docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+  docker.elastic.co/elasticsearch/elasticsearch:8.8.0
+  # docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
 
 docker exec -u root es1 /usr/share/elasticsearch/bin/elasticsearch-plugin install analysis-icu analysis-kuromoji --batch
 
