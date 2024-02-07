@@ -18,6 +18,20 @@ on:
 jobs:
 
   build-tests:
+    services:
+      elasticsearch:
+        image: docker.elastic.co/elasticsearch/elasticsearch:8.8.0
+        env:
+          discovery.type: single-node
+        ports:
+            # <port on host>:<port on container>
+            - 9209:9200
+        options: >-
+          --health-cmd "curl http://localhost:9209/_cluster/health"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
+          
     name: Build and tests
     runs-on: ubuntu-latest
     steps:
@@ -52,27 +66,24 @@ jobs:
       #     node port: 9300
       #     discovery type: "single-node"
           
-      - name: Build Image for ES7
-        id: Build-elasticsearch
-        uses: docker/build-push-action@v4
-        with:
-          target: omni_es
-          tags: bees-omnisearch-es7:omni_es
-          # cache-from: type=gha
-          # cache-to: type=gha,mode=max
-          # build-args: AWS_ECR_ACCOUNT_URL=${{ vars.FN_ECR_REGISTRY_URL }}
-          # push: false
-          # load: true
+      # - name: Build Image for ES7
+      #   id: Build-elasticsearch
+      #   uses: docker/build-push-action@v4
+      #   with:
+      #     target: omni_es
+      #     tags: bees-omnisearch-es7:omni_es
+      #     # cache-from: type=gha
+      #     # cache-to: type=gha,mode=max
+      #     # build-args: AWS_ECR_ACCOUNT_URL=${{ vars.FN_ECR_REGISTRY_URL }}
+      #     # push: false
+      #     # load: true
              
-      - name: Run ES7
-        uses: docker/build-push-action@v4
-        with:
-          run: |
-            docker run --name bees-omnisearch-es7 -d --publish 9209:9201 --expose 9201 -e node.name=fn-dm-bees-omni-data-01 -e discovery.type=single-node -e http.port=9201 -e http.cors.enabled=true -e http.cors.allow-origin=* -e http.cors.allow-headers=X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization -e http.cors.allow-credentials=true -e xpack.security.enabled=false -e bootstrap.system_call_filter=false -e ES_JAVA_OPTS="-Xms1g -Xmx1g" bees-omnisearch-es7:omni_es
+      # - name: Run ES7
+      #   uses: docker/build-push-action@v4
+      #   with:
+      #     run: |
+      #       docker run --name bees-omnisearch-es7 -d --publish 9209:9201 --expose 9201 -e node.name=fn-dm-bees-omni-data-01 -e discovery.type=single-node -e http.port=9201 -e http.cors.enabled=true -e http.cors.allow-origin=* -e http.cors.allow-headers=X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization -e http.cors.allow-credentials=true -e xpack.security.enabled=false -e bootstrap.system_call_filter=false -e ES_JAVA_OPTS="-Xms1g -Xmx1g" bees-omnisearch-es7:omni_es
 
-      - name: get the stats
-        run: curl -X Get "localhost:9209/_cluster/stats?pretty=true"
-                
       - name: Wait for server to be ready
         run: |
               while ! curl -s http://localhost:9209 > /dev/null; do
@@ -80,6 +91,9 @@ jobs:
                 sleep 5
               done
         shell: bash
+        
+      - name: get the stats
+        run: curl -X Get "http://localhost:9209/_cluster/stats?pretty=true"
             
       - name: Run tests
         id: Build-tests
