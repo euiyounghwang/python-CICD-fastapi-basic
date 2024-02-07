@@ -18,7 +18,7 @@ on:
     
 jobs:
 
-  build:
+  build-tests:
     name: Install Dependency with Poetry
     runs-on: ubuntu-latest
     steps:
@@ -47,39 +47,7 @@ jobs:
           # build-args: AWS_ECR_ACCOUNT_URL=${{ vars.FN_ECR_REGISTRY_URL }}
           # push: false
           # load: true
-          
-      - name: Post to a Slack channel
-        uses: act10ns/slack@v1
-        with:
-          status: ${{ job.status }}
-          steps: ${{ toJson(steps) }}
-          channel: '#alert'
-          notify_when: 'failure'
-          notification_title: "{workflow} is failing"
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: always()
-
-
-  test:
-    name: Run tests
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      # - name: Install poetry
-      #   id: Build-Poetry-for-tests
-      #   run: pipx install poetry
-
-      # - uses: actions/setup-python@v4
-      #   with:
-      #     python-version: 3.9
-      #     cache: poetry
-
-      # - name: Install dependencies
-      #   run: poetry install
-        
+             
       - name: Run ES7
         uses: docker/build-push-action@v4
         with:
@@ -112,7 +80,7 @@ jobs:
 
   build-docker:
     name: Build and Push to DockerHub
-    needs: test
+    needs: build-tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
