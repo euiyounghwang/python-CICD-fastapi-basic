@@ -56,24 +56,29 @@ jobs:
           sudo sysctl -w fs.file-max=262144
           sudo sysctl -w vm.max_map_count=262144
     
-      - name: Install Elastisearch
-        uses: dreamsofimran/elasticsearch-action@v1.0
-        with:
-          elasticsearch version: "8.8.0"
-          cluster name: docker-elasticsearch
-          host port: 9209
-          container port: 9200
-          host node port: 9300
-          node port: 9300
-          discovery type: "single-node"
-          plugins: |
-            analysis-icu
-            analysis-smartcn
-            analysis-kuromoji
-            analysis-stempel
-            analysis-ukrainian
-            analysis-phonetic
+      # - name: Install Elastisearch
+      #   uses: dreamsofimran/elasticsearch-action@v1.0
+      #   with:
+      #     elasticsearch version: "8.8.0"
+      #     cluster name: docker-elasticsearch
+      #     host port: 9209
+      #     container port: 9200
+      #     host node port: 9300
+      #     node port: 9300
+      #     discovery type: "single-node"
+      #     plugins: |
+      #       analysis-icu
+      #       analysis-smartcn
+      #       analysis-kuromoji
+      #       analysis-stempel
+      #       analysis-ukrainian
+      #       analysis-phonetic
       
+      - name: run elasticsearch
+        run: |
+             docker network create elastic
+             docker run -e "node.name=es1" -e "cluster.name=docker-elasticsearch" -e "cluster.initial_master_nodes=es1" -e "discovery.seed_hosts=es1" -e "cluster.routing.allocation.disk.threshold_enabled=false" -e "bootstrap.memory_lock=true" -e "ES_JAVA_OPTS=-Xms1g -Xmx1g" -e "xpack.security.enabled=false" -e "xpack.license.self_generated.type=basic" --ulimit nofile=65536:65536 --ulimit memlock=-1:-1 -p 9209:9200 -p 9300:9300 --name="es1" --network=elastic -d elasticsearch:7.6.1
+            #  docker run --network elastic --rm appropriate/curl --max-time 120 --retry 120 --retry-delay 1 --retry-connrefused --show-error --silent http://es1:9200
       
       - name: Elasticsearch is reachable
         run: |
