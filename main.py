@@ -35,7 +35,9 @@ async def info():
          summary="Return Json")
 async def get_es_info():
     logger.info('get_es_info')
-    response = requests.get("http://localhost:9209/_cluster/health")
+    # response = requests.get("http://localhost:9209/_cluster/health")
+    response = requests.get("http://localhost:9209/_cat/plugins?format=json")
+    logger.info(response.json())
     return response.json()
 
 

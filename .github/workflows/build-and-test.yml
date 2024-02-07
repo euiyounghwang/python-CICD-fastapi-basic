@@ -77,7 +77,7 @@ jobs:
       
       - name: Elasticsearch is reachable
         run: |
-          curl --verbose --show-error http://localhost:9209/_cat/plugins
+          curl --verbose --show-error http://localhost:9209
         
         
       - name: Set up Docker Buildx
