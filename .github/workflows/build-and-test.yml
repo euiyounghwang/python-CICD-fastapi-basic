@@ -108,25 +108,25 @@ jobs:
   #         tags: ${{ steps.meta.outputs.tags }}
   #         labels: ${{ steps.meta.outputs.labels }}
 
-  alert:
-    name: Alerts
-    needs: docker
-    # if: ${{ github.event.workflow_run.conclusion == 'failure' }}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
+  # alert:
+  #   name: Alerts
+  #   needs: docker
+  #   # if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
       
-      - name: Post to a Slack channel
-        uses: 8398a7/action-slack@v3
-        with:
-          status: ${{ job.status }} 
-          author_name: Montoring-Slack from GitHub Actions
-          fields: repo,message,commit,author,action,eventName,ref,workflow,took # selectable (default: repo,commit,message,author)\
-          mention: here
-          if_mention: failure,cancelled
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: always() # Pick up events even if the job fails or is canceled.
+  #     - name: Post to a Slack channel
+  #       uses: 8398a7/action-slack@v3
+  #       with:
+  #         status: ${{ job.status }} 
+  #         author_name: Montoring-Slack from GitHub Actions
+  #         fields: repo,message,commit,author,action,eventName,ref,workflow,took # selectable (default: repo,commit,message,author)\
+  #         mention: here
+  #         if_mention: failure,cancelled
+  #       env:
+  #         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+  #       if: always() # Pick up events even if the job fails or is canceled.
       
         
       # - name: Slack Notification
