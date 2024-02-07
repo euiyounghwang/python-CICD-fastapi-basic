@@ -72,8 +72,8 @@ jobs:
         with:
           target: omni_es
           tags: bees-omnisearch-es7:omni_es
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          # cache-from: type=gha
+          # cache-to: type=gha,mode=max
           # build-args: AWS_ECR_ACCOUNT_URL=${{ vars.FN_ECR_REGISTRY_URL }}
           push: false
           load: true
