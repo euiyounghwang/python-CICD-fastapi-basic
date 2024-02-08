@@ -78,7 +78,7 @@ jobs:
             
       - name: Run tests
         id: Build-tests
-        run: poetry run pytest -sv ./tests1
+        run: poetry run pytest -sv ./tests
 
       - name: Archive code coverage results
         uses: actions/upload-artifact@v3
