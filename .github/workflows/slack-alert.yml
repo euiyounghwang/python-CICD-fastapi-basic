@@ -3,7 +3,7 @@ name: Slack Alert
 # Only trigger, when the build workflow succeeded
 on:
   workflow_run:
-    workflows: ["build-docker"]
+    workflows: ["build-and-test"]
     types:
       - completed
 
