@@ -15,8 +15,8 @@ on:
   pull_request:
     branches: ['*']
     
+    
 jobs:
-
   build-tests:
     # services:
     #   elasticsearch_service:
@@ -37,6 +37,21 @@ jobs:
     # strategy:
     #   matrix:
     #     elasticsearch: ["8.8.0"]
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_DB: postgres        
+          POSTGRES_PASSWORD: 1234
+          POSTGRES_USER: postgres
+        ports:
+          - 15432:5432
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
       - uses: actions/checkout@v3
 
