@@ -78,7 +78,7 @@ jobs:
             
       - name: Run tests
         id: Build-tests
-        run: poetry run pytest -sv ./tests
+        run: poetry run pytest -sv ./tests1
 
       - name: Archive code coverage results
         uses: actions/upload-artifact@v3
@@ -93,8 +93,6 @@ jobs:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}
           channel: '#alert'
-          notify_when: 'failure'
-          notification_title: "{workflow} is failing"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           
@@ -136,30 +134,28 @@ jobs:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}
           channel: '#alert'
-          notify_when: 'failure'
-          notification_title: "{workflow} is failing"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     
 
-  # success_notification:
-  #   name: Slack-Alerts
-  #   needs: build-docker
-  #   # if: ${{ github.event.workflow_run.conclusion == 'failure' }}
-  #   if: github.ref == 'refs/heads/master'
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
+  alert:
+    name: Slack-Alerts
+    needs: build-docker
+    # if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
       
-  #     - name: Post to a Slack channel
-  #       uses: act10ns/slack@v1
-  #       with:
-  #         status: ${{ job.status }}
-  #         steps: ${{ toJson(steps) }}
-  #         channel: '#alert'
-  #       env:
-  #         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-  #       if: always()
+      - name: Post to a Slack channel
+        uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+          channel: '#alert'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: always()
       
 
       
