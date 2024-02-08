@@ -3,7 +3,7 @@ name: Slack Alert
 # Only trigger, when the build workflow succeeded
 on:
   workflow_run:
-    workflows: ["build-and-test"]
+    workflows: ["Build and Test"]
     types:
       - completed
 
@@ -25,7 +25,6 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         if: always()
-        
         
         # - name: Post to a Slack channel
         #   uses: 8398a7/action-slack@v3
