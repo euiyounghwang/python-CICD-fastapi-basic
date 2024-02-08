@@ -34,18 +34,28 @@ jobs:
           
     name: Build and tests
     runs-on: ubuntu-latest
-    # strategy:
-    #   matrix:
-    #     elasticsearch: ["8.8.0"]
+    strategy:
+      matrix:
+        # elasticsearch: ["8.8.0"]
+        database-name:
+          - postgres
+        database-password:
+          - 1234
+        database-user:
+          - postgres
+        database-host:
+          - localhost
+        database-port:
+          - 15432:5432
     services:
       postgres:
         image: postgres:latest
         env:
-          POSTGRES_DB: postgres        
-          POSTGRES_PASSWORD: 1234
-          POSTGRES_USER: postgres
+          POSTGRES_DB: ${{ matrix.database-name }}        
+          POSTGRES_PASSWORD: ${{ matrix.database-password }}
+          POSTGRES_USER: ${{ matrix.database-user }}
         ports:
-          - 15432:5432
+          -  ${{ matrix.database-port }}
         # Set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
