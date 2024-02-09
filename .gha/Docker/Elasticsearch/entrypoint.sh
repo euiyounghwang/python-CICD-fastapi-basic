@@ -59,7 +59,7 @@ docker build \
   "$(dirname "$0")/."
 
 
-docker run --name=es1 --detach --network=elastic --publish 9209:9200 --expose 9200 \
+docker run --rm -it --name=es1 --network=elastic --publish 9209:9200 --expose 9200 \
   --ulimit nofile=65536:65536 \
   --ulimit memlock=-1:-1 \
   -e node.name=es1 \
