@@ -1,7 +1,7 @@
 {
   "app": {
     "es": {
-      "es_host": "http://localhost:9202",
+      "es_host": "http://localhost:9209",
       "index" : {
           "alias" : "metrics_search"
       }
