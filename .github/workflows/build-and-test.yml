@@ -112,13 +112,31 @@ jobs:
         run: |
           sudo apt-get install redis-tools
           redis-cli -h localhost -p 6379 ping
-          
-      - name: Start Elasticsearch
-        uses: ./.gha/Docker/Elasticsearch
+      
+      - name: Install Elasticsearch
         id: Install-Elasticsearch
-        # with:
-        #   stack-version: ${{ matrix.elasticsearch }}
-            
+        run: |
+          wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.13.0-linux-x86_64.tar.gz
+          tar -xzf elasticsearch-7.13.0-linux-x86_64.tar.gz
+          sudo elasticsearch-7.13.0/bin/elasticsearch-plugin install analysis-stempel;
+          sudo elasticsearch-7.13.0/bin/elasticsearch-plugin install analysis-ukrainian;
+          sudo elasticsearch-7.13.0/bin/elasticsearch-plugin install analysis-smartcn;
+          sudo elasticsearch-7.13.0/bin/elasticsearch-plugin install analysis-phonetic;
+          sudo elasticsearch-7.13.0/bin/elasticsearch-plugin install analysis-icu;
+          
+      
+      - name: Run Elasticsearch
+        id: Run-Elasticsearch
+        run: |
+          ES_JAVA_OPTS="-Xms1g -Xmx1g" elasticsearch-7.13.0/bin/elasticsearch -E http.port=9209
+        # background: true
+        
+      # - name: Start Elasticsearch
+      #   uses: ./.gha/Docker/Elasticsearch
+      #   id: Install-Elasticsearch
+      #   # with:
+      #   #   stack-version: ${{ matrix.elasticsearch }}
+
       - name: Elasticsearch is reachable
         id: Test-Elasticsearch
         run: |
