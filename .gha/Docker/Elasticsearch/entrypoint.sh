@@ -53,21 +53,21 @@ docker run \
 docker exec -u root es1 /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch analysis-stempel analysis-ukrainian analysis-smartcn analysis-phonetic analysis-icu analysis-nori analysis-kuromoji
 
 
-docker restart es1
+# docker restart es1
 
-set +e
-sleep 10
-docker run \
-  --network elastic \
-  --rm \
-  appropriate/curl \
-  --max-time 10 \
-  --retry 5 \
-  --retry-delay 5  \
-  --retry-connrefused \
-  --show-error \
-  --silent \
-  http://es1:9200/_cat/plugins
+# set +e
+# sleep 10
+# docker run \
+#   --network elastic \
+#   --rm \
+#   appropriate/curl \
+#   --max-time 10 \
+#   --retry 5 \
+#   --retry-delay 5  \
+#   --retry-connrefused \
+#   --show-error \
+#   --silent \
+#   http://es1:9200/_cat/plugins
 
 exit_status=$?
 if [ $exit_status -eq 0 ]; then
