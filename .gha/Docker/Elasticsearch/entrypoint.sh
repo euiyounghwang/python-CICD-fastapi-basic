@@ -2,7 +2,7 @@
 
 set -euxo pipefail
 
-STACK_VERSION=8.12.0
+STACK_VERSION=7.10.0
 
 if [[ -z $STACK_VERSION ]]; then
   echo -e "\033[31;1mERROR:\033[0m Required environment variable [STACK_VERSION] not set\033[0m"

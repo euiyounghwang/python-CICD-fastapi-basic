@@ -48,6 +48,7 @@ jobs:
         # database-port:
         #   - 15432:5432
     services:
+      id: Build-Service
       postgres:
         image: postgres:latest
         env:
