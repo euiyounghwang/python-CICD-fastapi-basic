@@ -50,17 +50,7 @@ docker run \
   -v /elasticsearch/plugins:/usr/share/elasticsearch/plugins \
   docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
 
-# docker exec -u root es1 /usr/share/elasticsearch/bin/elasticsearch-plugin install analysis-stempel analysis-ukrainian analysis-smartcn analysis-phonetic analysis-icu analysis-nori analysis-kuromoji
-# docker exec -u root es1 /usr/share/elasticsearch/bin/elasticsearch-plugin install analysis-stempel analysis-ukrainian analysis-smartcn analysis-phonetic analysis-icu analysis-nori analysis-kuromoji --batch
-
-docker exec -u root es1 /usr/share/elasticsearch/bin/elasticsearch-plugin install analysis-stempel && \ 
-/usr/share/elasticsearch/bin/elasticsearch-plugin install analysis-ukrainian && \ 
-/usr/share/elasticsearch/bin/elasticsearch-plugin install analysis-smartcn && \ 
-/usr/share/elasticsearch/bin/elasticsearch-plugin install analysis-phonetic && \ 
-/usr/share/elasticsearch/bin/elasticsearch-plugin install analysis-icu && \ 
-/usr/share/elasticsearch/bin/elasticsearch-plugin install analysis-nori && \ 
-/usr/share/elasticsearch/bin/elasticsearch-plugin install analysis-kuromoji
-
+docker exec -u root es1 /usr/share/elasticsearch/bin/elasticsearch-plugin install  --batch analysis-stempel analysis-ukrainian analysis-smartcn analysis-phonetic analysis-icu analysis-nori analysis-kuromoji
 
 docker restart es1
 
