@@ -95,11 +95,11 @@ docker run --rm -it --name=es1 --network=elastic --publish 9209:9200 --expose 92
 #   --silent \
 #   http://es1:9200/_cat/plugins
 
-exit_status=$?
-if [ $exit_status -eq 0 ]; then
-  echo "Elasticsearch up and running"
-else
-  docker logs es1
-  echo -e "\033[31;1mERROR:\033[0m The command failed with exit status: $exit_status\033[0m"
-  exit 1
-fi
+# exit_status=$?
+# if [ $exit_status -eq 0 ]; then
+#   echo "Elasticsearch up and running"
+# else
+#   docker logs es1
+#   echo -e "\033[31;1mERROR:\033[0m The command failed with exit status: $exit_status\033[0m"
+#   exit 1
+# fi
