@@ -66,11 +66,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       
-      - name: Postgres is reachable
-        id: Ping-Postgres
+      - name: Test Postgres connection
         run: |
-          curl -v -sL -I localhost:15432/ping
-      
+          # for psql
+          sudo apt-get upgrade -y
+          sudo apt-get install -y postgresql-client
+          # Test psql connection
+          PGPASSWORD=1234 psql -h localhost -p 15432 -U postgres -d postgres -c "select 1"
+        
       - name: Install poetry
         id: Build-Poetry
         run: pipx install poetry
