@@ -67,7 +67,12 @@ jobs:
       redis:
         # Docker Hub image
         image: redis
-        #
+        # Set health checks to wait until redis has started
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
         ports:
           # Opens tcp port 6379 on the host and service container
           - 6379:6379
@@ -82,7 +87,13 @@ jobs:
           sudo apt-get install -y postgresql-client
           # Test psql connection
           PGPASSWORD=1234 psql -h localhost -p 15432 -U postgres -d postgres -c "select 1"
-        
+      
+      - name: Test Redis connection
+        id: Test-Redis
+        run: |
+            sudo apt-get install redis-tools
+            redis-cli -h localhost -p 6379 ping
+          
       - name: Install poetry
         id: Build-Poetry
         run: pipx install poetry
