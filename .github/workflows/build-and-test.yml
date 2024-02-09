@@ -34,28 +34,28 @@ jobs:
           
     name: Build and tests
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
+    # strategy:
+      # matrix:
         # elasticsearch: ["8.8.0"]
-        database-name:
-          - postgres
-        database-password:
-          - 1234
-        database-user:
-          - postgres
-        database-host:
-          - localhost
-        database-port:
-          - 15432:5432
+        # database-name:
+        #   - postgres
+        # database-password:
+        #   - 1234
+        # database-user:
+        #   - postgres
+        # database-host:
+        #   - localhost
+        # database-port:
+        #   - 15432:5432
     services:
       postgres:
         image: postgres:latest
         env:
-          POSTGRES_DB: ${{ matrix.database-name }}        
-          POSTGRES_PASSWORD: ${{ matrix.database-password }}
-          POSTGRES_USER: ${{ matrix.database-user }}
+          POSTGRES_DB: postgres   
+          POSTGRES_PASSWORD: 1234
+          POSTGRES_USER: postgres
         ports:
-          -  ${{ matrix.database-port }}
+          - 15432:5432
         # Set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
@@ -64,7 +64,11 @@ jobs:
           --health-retries 5
     steps:
       - uses: actions/checkout@v3
-
+      
+      - name: Postgres is reachable
+        run: |
+          curl -v -sL -I localhost:15432/ping
+      
       - name: Install poetry
         id: Build-Poetry
         run: pipx install poetry
