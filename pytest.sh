@@ -7,4 +7,4 @@ source $SCRIPTDIR/.venv/bin/activate
 
 # py.test -v tests
 # py.test -v ./tests --cov-report term-missing --cov
-poetry run py.test -sv ./tests
+poetry run py.test -sv ./tests --disable-warnings
