@@ -79,21 +79,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       
-      - name: Test Postgres connection
-        id: Test-Postgres
-        run: |
-          # for psql
-          # sudo apt-get upgrade -y
-          sudo apt-get install -y postgresql-client
-          # Test psql connection
-          PGPASSWORD=1234 psql -h localhost -p 15432 -U postgres -d postgres -c "select 1"
-      
-      - name: Test Redis connection
-        id: Test-Redis
-        run: |
-            sudo apt-get install redis-tools
-            redis-cli -h localhost -p 6379 ping
-          
       - name: Install poetry
         id: Build-Poetry
         run: pipx install poetry
@@ -113,7 +98,21 @@ jobs:
           sudo sysctl -w fs.file-max=262144
           sudo sysctl -w vm.max_map_count=262144
     
-     
+      - name: Postgres is reachable
+        id: Test-Postgres
+        run: |
+          # for psql
+          # sudo apt-get upgrade -y
+          sudo apt-get install -y postgresql-client
+          # Test psql connection
+          PGPASSWORD=1234 psql -h localhost -p 15432 -U postgres -d postgres -c "select 1"
+        
+      - name: Redis is reachable
+        id: Test-Redis
+        run: |
+          sudo apt-get install redis-tools
+          redis-cli -h localhost -p 6379 ping
+          
       - name: Start Elasticsearch
         uses: ./.gha/Docker/Elasticsearch
         # with:
