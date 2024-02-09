@@ -81,19 +81,19 @@ docker run --rm -it --name=es1 --network=elastic --publish 9209:9200 --expose 92
 
 # docker restart es1
 
-set +e
-sleep 10
-docker run \
-  --network elastic \
-  --rm \
-  appropriate/curl \
-  --max-time 10 \
-  --retry 5 \
-  --retry-delay 5  \
-  --retry-connrefused \
-  --show-error \
-  --silent \
-  http://es1:9200/_cat/plugins
+# set +e
+# sleep 10
+# docker run \
+#   --network elastic \
+#   --rm \
+#   appropriate/curl \
+#   --max-time 10 \
+#   --retry 5 \
+#   --retry-delay 5  \
+#   --retry-connrefused \
+#   --show-error \
+#   --silent \
+#   http://es1:9200/_cat/plugins
 
 exit_status=$?
 if [ $exit_status -eq 0 ]; then

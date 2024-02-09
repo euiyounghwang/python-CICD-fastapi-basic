@@ -115,10 +115,12 @@ jobs:
           
       - name: Start Elasticsearch
         uses: ./.gha/Docker/Elasticsearch
+        id: Install-Elasticsearch
         # with:
         #   stack-version: ${{ matrix.elasticsearch }}
             
       - name: Elasticsearch is reachable
+        id: Test-Elasticsearch
         run: |
           curl --verbose --show-error http://localhost:9209
       
