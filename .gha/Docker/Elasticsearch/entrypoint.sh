@@ -50,7 +50,7 @@ docker run \
   -v /elasticsearch/plugins:/usr/share/elasticsearch/plugins \
   docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
 
-docker exec -u root es1 /usr/share/elasticsearch/bin/elasticsearch-plugin install analysis-icu analysis-kuromoji --batch
+docker exec -u root es1 /usr/share/elasticsearch/bin/elasticsearch-plugin install analysis-stempel analysis-ukrainian analysis-smartcn analysis-phonetic analysis-icu analysis-nori analysis-kuromoji --batch
 
 docker restart es1
 
