@@ -28,29 +28,51 @@ if docker network ls | grep -q "${network_name}"; then
 fi
 docker network create elastic
 
-docker run \
-  --env "node.name=es1" \
-  --env "cluster.name=docker-elasticsearch" \
-  --env "cluster.initial_master_nodes=es1" \
-  --env "discovery.seed_hosts=es1" \
-  --env "cluster.routing.allocation.disk.threshold_enabled=false" \
-  --env "bootstrap.memory_lock=true" \
-  --env "ES_JAVA_OPTS=-Xms1g -Xmx1g" \
-  --env "xpack.security.enabled=false" \
-  --env "xpack.security.http.ssl.enabled=false" \
-  --env "xpack.license.self_generated.type=basic" \
-  --env "action.destructive_requires_name=false" \
-  --env "http.port=9200" \
-  --ulimit nofile=65536:65536 \
-  --ulimit memlock=-1:-1 \
-  --publish "9209:9200" \
-  --network=elastic \
-  --name="es1" \
-  --detach \
-  -v /elasticsearch/plugins:/usr/share/elasticsearch/plugins \
-  docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+# docker run \
+#   --env "node.name=es1" \
+#   --env "cluster.name=docker-elasticsearch" \
+#   --env "cluster.initial_master_nodes=es1" \
+#   --env "discovery.seed_hosts=es1" \
+#   --env "cluster.routing.allocation.disk.threshold_enabled=false" \
+#   --env "bootstrap.memory_lock=true" \
+#   --env "ES_JAVA_OPTS=-Xms1g -Xmx1g" \
+#   --env "xpack.security.enabled=false" \
+#   --env "xpack.security.http.ssl.enabled=false" \
+#   --env "xpack.license.self_generated.type=basic" \
+#   --env "action.destructive_requires_name=false" \
+#   --env "http.port=9200" \
+#   --ulimit nofile=65536:65536 \
+#   --ulimit memlock=-1:-1 \
+#   --publish "9209:9200" \
+#   --network=elastic \
+#   --name="es1" \
+#   --detach \
+#   -v /elasticsearch/plugins:/usr/share/elasticsearch/plugins \
+#   docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
 
-docker exec -u root es1 /usr/share/elasticsearch/bin/elasticsearch-plugin install  --batch analysis-stempel analysis-ukrainian analysis-smartcn analysis-phonetic analysis-icu analysis-nori analysis-kuromoji
+# docker exec -u root es1 /usr/share/elasticsearch/bin/elasticsearch-plugin install  --batch analysis-stempel analysis-ukrainian analysis-smartcn analysis-phonetic analysis-icu analysis-nori analysis-kuromoji
+
+docker build \
+  -f "$(dirname "$0")/Dockerfile" \
+  -t fn-bees-omnisearch:omni_es \
+  --target omni_es \
+  "$(dirname "$0")/."
+
+
+docker run --rm -it -d --publish 9209:9200 --expose 9200 \
+  -e node.name=es1 \
+  -e discovery.type=single-node \
+  -e http.port=9200 \
+  -e http.cors.enabled=true \
+  -e http.cors.allow-origin=* \
+  -e http.cors.allow-headers=X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization \
+  -e http.cors.allow-credentials=true \
+  -e xpack.security.enabled=false \
+  -e bootstrap.system_call_filter=false \
+  -e ES_JAVA_OPTS="-Xms1g -Xmx1g" \
+  -v "$SCRIPTDIR:/FN-BEES-Services/" \
+  fn-bees-omnisearch:omni_es
+
 
 docker restart es1
 
