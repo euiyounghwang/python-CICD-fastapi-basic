@@ -59,8 +59,8 @@ docker build \
   "$(dirname "$0")/."
 
 
-docker run --rm -it -d --publish 9209:9200 --expose 9200 \
-  -e node.name=es1 \
+docker run --rm -it -d --name=es1 --publish 9209:9200 --expose 9200 \
+  -e node.name=fn-dm-bees-omni-data-01 \
   -e discovery.type=single-node \
   -e http.port=9200 \
   -e http.cors.enabled=true \
