@@ -128,7 +128,7 @@ jobs:
       - name: Run Elasticsearch
         id: Run-Elasticsearch
         run: |
-          ES_JAVA_OPTS="-Xms1g -Xmx1g" elasticsearch-7.13.0/bin/elasticsearch -E http.port=9209
+          ES_JAVA_OPTS="-Xms1g -Xmx1g" elasticsearch-7.13.0/bin/elasticsearch -E http.port=9209 -d
         # background: true
         
       # - name: Start Elasticsearch
