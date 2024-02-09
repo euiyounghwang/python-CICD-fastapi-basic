@@ -87,7 +87,30 @@ tests/test_api.py::test_api PASSED                                              
 ```bash
 curl -X POST -H 'Content-type: application/json' --data '{"text":"Hello, World!"}' <slack incomming URL>
 ```
+- Slack alerts from master branch
+```bash
+# Failure
+euiyounghwangeuiyounghwang
+Workflow Build and Test job build-tests triggered by push is FAILURE for master
+1d035a00 - 1 commits
+Job Steps
+:heavy_check_mark: fe3a7aab5c294ff1bb4920e7f3615586
+:heavy_check_mark: Build-Poetry
+:heavy_check_mark: Test-Postgres
+:heavy_check_mark: Test-Redis
+:heavy_check_mark: Install-Elasticsearch
+:x: Run-Elasticsearch
+:no_entry_sign: Test-Elasticsearch
+:no_entry_sign: Build-tests
+<https://github.com/euiyounghwang/python-CICD-fastapi-basic|euiyounghwang/python-CICD-fastapi-basic> 
+#163euiyounghwang/python-CICD-fastapi-basic #163 | Today at 11:28 PM
 
+# Success
+euiyounghwangeuiyounghwang
+Workflow Build and Test job alert triggered by push is SUCCESS for master
+93e61e9c - 1 commits
+<https://github.com/euiyounghwang/python-CICD-fastapi-basic|euiyounghwang/python-CICD-fastapi-basic> #164euiyounghwang/python-CICD-fastapi-basic #164 | Today at 11:32 PM
+```
 
 ### Git Branch
 - git branch -D SEARCH-476
