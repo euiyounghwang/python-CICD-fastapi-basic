@@ -55,8 +55,8 @@ docker exec -u root es1 /usr/share/elasticsearch/bin/elasticsearch-plugin instal
 
 docker restart es1
 
-# set +e
-# sleep 10
+set +e
+sleep 10
 # docker run \
 #   --network elastic \
 #   --rm \
