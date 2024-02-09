@@ -62,7 +62,7 @@ docker build \
 docker run --name=es1 --detach --network=elastic --publish 9209:9200 --expose 9200 \
   --ulimit nofile=65536:65536 \
   --ulimit memlock=-1:-1 \
-  -e node.name=fn-dm-bees-omni-data-01 \
+  -e node.name=es1 \
   -e cluster.initial_master_nodes=es1 \
   -e discovery.seed_hosts=es1 \
   -e discovery.type=single-node \
