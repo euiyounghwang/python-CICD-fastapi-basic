@@ -79,7 +79,7 @@ docker run --name=es1 --detach --network=elastic --publish 9209:9200 --expose 92
   fn-bees-omnisearch:omni_es
 
 
-docker restart es1
+# docker restart es1
 
 set +e
 sleep 10
