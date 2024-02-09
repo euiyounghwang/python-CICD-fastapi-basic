@@ -10,7 +10,7 @@ ENTRYPOINT ["/entrypoint.sh"]
 # Build Elasticsearch 7 image
 FROM docker.elastic.co/elasticsearch/elasticsearch:8.8.0 as omni_es
 
-ARG DEBIAN_FRONTEND=noninteractive
+# ARG DEBIAN_FRONTEND=noninteractive
 
 RUN elasticsearch-plugin install analysis-stempel
 RUN elasticsearch-plugin install analysis-ukrainian
