@@ -28,6 +28,14 @@ if docker network ls | grep -q "${network_name}"; then
 fi
 docker network create elastic
 
+
+docker build \
+  -f "$(dirname "$0")/Dockerfile" \
+  -t fn-bees-omnisearch:omni_es \
+  --target omni_es \
+  "$(dirname "$0")/."
+  
+  
 docker run \
   --env "node.name=es1" \
   --env "cluster.name=docker-elasticsearch" \
@@ -48,12 +56,11 @@ docker run \
   --name="es1" \
   --detach \
   -v /elasticsearch/plugins:/usr/share/elasticsearch/plugins \
-  docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+  # docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+  fn-bees-omnisearch:omni_es
 
-docker exec -u root es1 /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch analysis-stempel analysis-ukrainian analysis-smartcn analysis-phonetic analysis-icu analysis-nori analysis-kuromoji
-
-
-docker restart es1
+# docker exec -u root es1 /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch analysis-stempel analysis-ukrainian analysis-smartcn analysis-phonetic analysis-icu analysis-nori analysis-kuromoji
+# docker restart es1
 
 set +e
 sleep 10
