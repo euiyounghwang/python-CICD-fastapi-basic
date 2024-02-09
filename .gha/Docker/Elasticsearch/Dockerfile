@@ -8,7 +8,7 @@ ENTRYPOINT ["/entrypoint.sh"]
 
 
 # Build Elasticsearch 7 image
-FROM docker.elastic.co/elasticsearch/elasticsearch:7.10.2 as omni_es
+FROM docker.elastic.co/elasticsearch/elasticsearch:8.12.0 as omni_es
 
 ARG DEBIAN_FRONTEND=noninteractive
 

@@ -2,7 +2,7 @@
 
 set -euxo pipefail
 
-STACK_VERSION=7.10.0
+STACK_VERSION=8.12.0
 
 if [[ -z $STACK_VERSION ]]; then
   echo -e "\033[31;1mERROR:\033[0m Required environment variable [STACK_VERSION] not set\033[0m"
@@ -66,6 +66,7 @@ docker run --name=es1 --detach --network=elastic --publish 9209:9200 --expose 92
   -e discovery.type=single-node \
   -e http.port=9200 \
   -e http.cors.enabled=true \
+  -e bootstrap.memory_lock=true \
   -e http.cors.allow-origin=* \
   -e http.cors.allow-headers=X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization \
   -e http.cors.allow-credentials=true \
