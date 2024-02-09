@@ -59,7 +59,7 @@ docker build \
   "$(dirname "$0")/."
 
 
-docker run --rm -it -d --name=es1 --publish 9209:9200 --expose 9200 \
+docker run --rm -it -d --name=es1 --detach --network=elastic --publish 9209:9200 --expose 9200 \
   -e node.name=fn-dm-bees-omni-data-01 \
   -e discovery.type=single-node \
   -e http.port=9200 \
