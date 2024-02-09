@@ -41,6 +41,9 @@ poetry add httpx
 poetry add pytest
 poetry add pytest-cov
 poetry add requests
+poetry add pyyaml
+poetry add elasticsearch==7.13
+poetry add python-dotenv
 ```
 
 
