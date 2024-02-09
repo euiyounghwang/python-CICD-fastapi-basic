@@ -129,7 +129,7 @@ jobs:
         id: Run-Elasticsearch
         run: |
           ES_JAVA_OPTS="-Xms1g -Xmx1g" elasticsearch-7.13.0/bin/elasticsearch -E http.port=9209 -d
-          Start-Sleep -s 10
+          sleep 10
         # background: true
         
       # - name: Sleep for 30 seconds
