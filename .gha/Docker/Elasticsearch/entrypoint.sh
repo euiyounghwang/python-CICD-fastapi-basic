@@ -59,7 +59,7 @@ docker build \
   "$(dirname "$0")/."
 
 
-docker run --rm -it -d --name=es1 -network=elastic --publish 9209:9200 --expose 9200 \
+docker run --name=es1 --detach --network=elastic --publish 9209:9200 --expose 9200 \
   --ulimit nofile=65536:65536 \
   --ulimit memlock=-1:-1 \
   -e node.name=fn-dm-bees-omni-data-01 \
@@ -72,7 +72,7 @@ docker run --rm -it -d --name=es1 -network=elastic --publish 9209:9200 --expose 
   -e xpack.security.enabled=false \
   -e bootstrap.system_call_filter=false \
   -e ES_JAVA_OPTS="-Xms1g -Xmx1g" \
-  -v "$SCRIPTDIR:/FN-BEES-Services/" \
+  -v /elasticsearch/plugins:/usr/share/elasticsearch/plugins \
   fn-bees-omnisearch:omni_es
 
 
