@@ -25,8 +25,8 @@ load_dotenv()
 logger = create_log()
 doc = read_config_yaml()
 
-
-es_client = Elasticsearch(hosts= os.getenv("ES_HOST", doc['app']['es']['es_host']),
+ES_HOST = os.getenv("ES_HOST", doc['app']['es']['es_host'])
+es_client = Elasticsearch(hosts= ES_HOST,
                           headers=get_headers(),
                           verify_certs=False,
                           timeout=600

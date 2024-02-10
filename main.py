@@ -1,10 +1,11 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 from config.log_config import create_log
+from injector import ES_HOST
 import requests
 
-
 logger = create_log()
+
 app = FastAPI()
 
 
@@ -34,9 +35,8 @@ async def info():
          description="Default GET API", 
          summary="Return Json")
 async def get_es_info():
-    logger.info('get_es_info')
-    # response = requests.get("http://localhost:9209/_cluster/health")
-    response = requests.get("http://localhost:9209/_cat/plugins?format=json")
+    logger.info(f"get_es_info hosts -> {ES_HOST}")
+    response = requests.get(f"{ES_HOST}/_cat/plugins?format=json")
     logger.info(response.json())
     return response.json()
 

@@ -31,7 +31,7 @@ RUN /bin/bash -c 'source $POETRY_VENV/bin/activate && \
 
 
 # Build Elasticsearch 7 image
-FROM docker.elastic.co/elasticsearch/elasticsearch:7.10.2 as omni_es
+FROM docker.elastic.co/elasticsearch/elasticsearch:8.8.0 as omni_es
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -42,6 +42,17 @@ RUN elasticsearch-plugin install analysis-phonetic
 RUN elasticsearch-plugin install analysis-icu
 
 EXPOSE 9201
+
+
+FROM --platform=linux/amd64 python:3.9.7 as test
+
+WORKDIR /app
+#COPY --from=indexing_environment $POETRY_VENV $POETRY_VENV
+COPY --from=environment /app .
+COPY . FN-Basic-Services
+
+ENTRYPOINT ["/app/FN-Basic-Services/docker-run-tests.sh"]
+
 
 
 FROM --platform=linux/amd64 python:3.9.7 as runtime

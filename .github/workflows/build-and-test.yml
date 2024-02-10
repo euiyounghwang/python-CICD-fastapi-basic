@@ -116,19 +116,19 @@ jobs:
       - name: Install Elasticsearch
         id: Install-Elasticsearch
         run: |
-          wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.13.0-linux-x86_64.tar.gz
-          tar -xzf elasticsearch-7.13.0-linux-x86_64.tar.gz
-          sudo elasticsearch-7.13.0/bin/elasticsearch-plugin install analysis-stempel;
-          sudo elasticsearch-7.13.0/bin/elasticsearch-plugin install analysis-ukrainian;
-          sudo elasticsearch-7.13.0/bin/elasticsearch-plugin install analysis-smartcn;
-          sudo elasticsearch-7.13.0/bin/elasticsearch-plugin install analysis-phonetic;
-          sudo elasticsearch-7.13.0/bin/elasticsearch-plugin install analysis-icu;
+          wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.8.0-linux-x86_64.tar.gz
+          tar -xzf elasticsearch-8.8.0-linux-x86_64.tar.gz
+          sudo elasticsearch-8.8.0/bin/elasticsearch-plugin install analysis-stempel;
+          sudo elasticsearch-8.8.0/bin/elasticsearch-plugin install analysis-ukrainian;
+          sudo elasticsearch-8.8.0/bin/elasticsearch-plugin install analysis-smartcn;
+          sudo elasticsearch-8.8.0/bin/elasticsearch-plugin install analysis-phonetic;
+          sudo elasticsearch-8.8.0/bin/elasticsearch-plugin install analysis-icu;
           
       
       - name: Run Elasticsearch
         id: Run-Elasticsearch
         run: |
-          ES_JAVA_OPTS="-Xms1g -Xmx1g" elasticsearch-7.13.0/bin/elasticsearch -E http.port=9209 -d
+          ES_JAVA_OPTS="-Xms1g -Xmx1g" elasticsearch-8.8.0/bin/elasticsearch -E http.port=9203 -d
           sleep 10
         # background: true
         
