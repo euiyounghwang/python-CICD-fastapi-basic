@@ -145,7 +145,7 @@ jobs:
       - name: Elasticsearch is reachable
         id: Test-Elasticsearch
         run: |
-          curl --verbose --show-error http://localhost:9209
+          curl --verbose --show-error http://localhost:9203
       
                       
       - name: Set up Docker Buildx
