@@ -26,14 +26,15 @@ jobs:
       # elasticsearch_version: '8.8.0'
       elasticsearch_http_port: 9203
     services:
-      # elasticsearch:
-      #   image: elasticsearch:8.8.0
-      #   env:
-      #     discovery.type: "single-node"
-      #     xpack.security.enabled: "false"
-      #     ES_JAVA_OPTS: "-Xms1g -Xmx1g"
-      #   ports:
-      #     - 9203:9200
+      elasticsearch:
+        image: elasticsearch:8.8.0
+        env:
+          discovery.type: "single-node"
+          xpack.security.enabled: "false"
+          ES_JAVA_OPTS: "-Xms1g -Xmx1g"
+        command: sh -c './bin/elasticsearch-plugin install analysis-stempel analysis-ukrainian analysis-smartcn analysis-phonetic analysis-icu --batch'
+        ports:
+          - ${{ env.elasticsearch_http_port }} : ${{ env.elasticsearch_http_port }}
       postgres:
         image: postgres:latest
         env:
@@ -99,23 +100,23 @@ jobs:
           sudo apt-get install redis-tools
           redis-cli -h localhost -p 6379 ping
       
-      - name: Install Elasticsearch
-        id: Install-Elasticsearch
-        run: |
-          wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${{ env.elasticsearch_version }}-linux-x86_64.tar.gz
-          tar -xzf elasticsearch-${{ env.elasticsearch_version }}-linux-x86_64.tar.gz
-          sudo elasticsearch-${{ env.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-stempel;
-          sudo elasticsearch-${{ env.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-ukrainian;
-          sudo elasticsearch-${{ env.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-smartcn;
-          sudo elasticsearch-${{ env.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-phonetic;
-          sudo elasticsearch-${{ env.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-icu;
+      # - name: Install Elasticsearch
+      #   id: Install-Elasticsearch
+      #   run: |
+      #     wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${{ env.elasticsearch_version }}-linux-x86_64.tar.gz
+      #     tar -xzf elasticsearch-${{ env.elasticsearch_version }}-linux-x86_64.tar.gz
+      #     sudo elasticsearch-${{ env.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-stempel;
+      #     sudo elasticsearch-${{ env.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-ukrainian;
+      #     sudo elasticsearch-${{ env.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-smartcn;
+      #     sudo elasticsearch-${{ env.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-phonetic;
+      #     sudo elasticsearch-${{ env.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-icu;
           
           
-      - name: Run Elasticsearch
-        id: Run-Elasticsearch
-        run: |
-          ES_JAVA_OPTS="-Xms1g -Xmx1g" elasticsearch-${{ env.elasticsearch_version }}/bin/elasticsearch -E http.port=${{ env.elasticsearch_http_port }} -d
-          sleep 30
+      # - name: Run Elasticsearch
+      #   id: Run-Elasticsearch
+      #   run: |
+      #     ES_JAVA_OPTS="-Xms1g -Xmx1g" elasticsearch-${{ env.elasticsearch_version }}/bin/elasticsearch -E http.port=${{ env.elasticsearch_http_port }} -d
+      #     sleep 30
         
       - name: Elasticsearch is reachable
         id: Test-Elasticsearch
