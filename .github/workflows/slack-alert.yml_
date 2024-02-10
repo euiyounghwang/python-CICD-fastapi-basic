@@ -3,7 +3,7 @@ name: Slack Alert
 # Only trigger, when the build workflow succeeded
 on:
   workflow_run:
-    workflows: ["Build and Test"]
+    workflows: ["Python CICD FastAPI"]
     types:
       - completed
 

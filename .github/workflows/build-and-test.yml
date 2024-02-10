@@ -1,5 +1,5 @@
 
-name: Build and Test
+name: Python CICD FastAPI
 
 # on:
 #   workflow_call:
@@ -24,6 +24,7 @@ jobs:
       elasticsearch_version: '7.13.0'
       # It's not working to run as daemon
       # elasticsearch_version: '8.8.0'
+      elasticsearch_port: 9203
     services:
       postgres:
         image: postgres:latest
@@ -104,13 +105,13 @@ jobs:
       - name: Run Elasticsearch
         id: Run-Elasticsearch
         run: |
-          ES_JAVA_OPTS="-Xms1g -Xmx1g" elasticsearch-${{ env.elasticsearch_version }}/bin/elasticsearch -E http.port=9203 -d
+          ES_JAVA_OPTS="-Xms1g -Xmx1g" elasticsearch-${{ env.elasticsearch_version }}/bin/elasticsearch -E http.port=${{ env.elasticsearch_port }} -d
           sleep 30
         
       - name: Elasticsearch is reachable
         id: Test-Elasticsearch
         run: |
-          curl --verbose --show-error http://localhost:9203
+          curl --verbose --show-error http://localhost:${{ env.elasticsearch_port }}
       
                       
       - name: Set up Docker Buildx
@@ -196,9 +197,8 @@ jobs:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}
           channel: '#alert'
+          # message: GitHub Ropository - ${{ github.event.repository.name }}
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         if: always()
-      
-
       
