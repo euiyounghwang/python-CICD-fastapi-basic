@@ -21,9 +21,9 @@ jobs:
     name: Build and tests
     runs-on: ubuntu-latest
     env:
-      # elasticsearch_version: '7.13.0'
+      elasticsearch_version: '7.13.0'
       # It's not working to run as daemon
-      elasticsearch_version: '8.8.0'
+      # elasticsearch_version: '8.8.0'
     services:
       postgres:
         image: postgres:latest
@@ -74,8 +74,7 @@ jobs:
           sudo sysctl -w vm.swappiness=1
           sudo sysctl -w fs.file-max=262144
           sudo sysctl -w vm.max_map_count=262144
-          chown -R root:elasticsearch /usr/share/elasticsearch
-    
+          
       - name: Postgres is reachable
         id: Test-Postgres
         run: |
@@ -91,13 +90,22 @@ jobs:
           sudo apt-get install redis-tools
           redis-cli -h localhost -p 6379 ping
       
-      - name: Runs Elasticsearch
-        id: Runs-Elasticsearch
-        uses: elastic/elastic-github-actions/elasticsearch@master
-        with:
-          stack-version: ${{ env.elasticsearch_version }}
-          plugins: analysis-stempel analysis-ukrainian analysis-smartcn analysis-phonetic analysis-icu
-          port: 9203
+      - name: Install Elasticsearch
+        id: Install-Elasticsearch
+        run: |
+          wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${{ env.elasticsearch_version }}-linux-x86_64.tar.gz
+          tar -xzf elasticsearch-${{ env.elasticsearch_version }}-linux-x86_64.tar.gz
+          sudo elasticsearch-${{ env.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-stempel;
+          sudo elasticsearch-${{ env.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-ukrainian;
+          sudo elasticsearch-${{ env.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-smartcn;
+          sudo elasticsearch-${{ env.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-phonetic;
+          sudo elasticsearch-${{ env.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-icu;
+        
+      - name: Run Elasticsearch
+        id: Run-Elasticsearch
+        run: |
+          ES_JAVA_OPTS="-Xms1g -Xmx1g" elasticsearch-${{ env.elasticsearch_version }}/bin/elasticsearch -E http.port=9203 -d
+          sleep 30
         
       - name: Elasticsearch is reachable
         id: Test-Elasticsearch

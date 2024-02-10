@@ -119,7 +119,15 @@ jobs:
       #   with:
       #     stack-version: ${{ env.elasticsearch_version }}
       #     plugins: 'analysis-kuromoji analysis-icu'
-            
+      
+      - name: Runs Elasticsearch
+        id: Runs-Elasticsearch
+        uses: elastic/elastic-github-actions/elasticsearch@master
+        with:
+          stack-version: ${{ env.elasticsearch_version }}
+          plugins: analysis-stempel analysis-ukrainian analysis-smartcn analysis-phonetic analysis-icu
+          port: 9203
+                
       - name: Install Elasticsearch
         id: Install-Elasticsearch
         run: |
