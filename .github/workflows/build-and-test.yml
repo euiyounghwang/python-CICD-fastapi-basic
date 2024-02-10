@@ -34,9 +34,11 @@ jobs:
           
     name: Build and tests
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        elasticsearch_version: ["7.13.0"]
+    env:
+      elasticsearch_version: '7.13.0'
+    # strategy:
+    #   matrix:
+    #     elasticsearch_version: ["7.13.0"]
         # database-name:
         #   - postgres
         # database-password:
@@ -116,13 +118,13 @@ jobs:
       - name: Install Elasticsearch
         id: Install-Elasticsearch
         run: |
-          wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${{ matrix.elasticsearch_version }}-linux-x86_64.tar.gz
-          tar -xzf elasticsearch--${{ matrix.elasticsearch_version }}-linux-x86_64.tar.gz
-          sudo elasticsearch--${{ matrix.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-stempel;
-          sudo elasticsearch--${{ matrix.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-ukrainian;
-          sudo elasticsearch--${{ matrix.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-smartcn;
-          sudo elasticsearch--${{ matrix.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-phonetic;
-          sudo elasticsearch--${{ matrix.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-icu;
+          wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${{ env.elasticsearch_version }}-linux-x86_64.tar.gz
+          tar -xzf elasticsearch-${{ env.elasticsearch_version }}-linux-x86_64.tar.gz
+          sudo elasticsearch--${{ env.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-stempel;
+          sudo elasticsearch--${{ env.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-ukrainian;
+          sudo elasticsearch--${{ env.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-smartcn;
+          sudo elasticsearch--${{ env.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-phonetic;
+          sudo elasticsearch--${{ env.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-icu;
           
       
       - name: Run Elasticsearch
