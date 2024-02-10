@@ -39,7 +39,7 @@ jobs:
         #   - 15432:5432
     services:
       elasticsearch:
-        image: elasticsearch:${{ env.elasticsearch_version }}
+        image: elasticsearch:8.8.0
         env:
           discovery.type: "single-node"
           xpack.security.enabled: "false"
