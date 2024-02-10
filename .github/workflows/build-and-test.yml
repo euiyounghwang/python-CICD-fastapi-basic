@@ -35,7 +35,8 @@ jobs:
     name: Build and tests
     runs-on: ubuntu-latest
     env:
-      elasticsearch_version: '7.13.0'
+      # elasticsearch_version: '7.13.0'
+      elasticsearch_version: '8.8.0'
     # strategy:
     #   matrix:
     #     elasticsearch_version: ["7.13.0"]
@@ -130,7 +131,7 @@ jobs:
       - name: Run Elasticsearch
         id: Run-Elasticsearch
         run: |
-          ES_JAVA_OPTS="-Xms1g -Xmx1g" elasticsearch-${{ env.elasticsearch_version }}/bin/elasticsearch -E http.port=9203 -d
+          ES_JAVA_OPTS="-Xms1g -Xmx1g" elasticsearch-${{ env.elasticsearch_version }}/bin/elasticsearch -E http.port=9203 -d -p pid
           sleep 10
         # background: true
         
