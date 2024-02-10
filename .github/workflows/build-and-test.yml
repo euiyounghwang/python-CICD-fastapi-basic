@@ -21,9 +21,9 @@ jobs:
     name: Build and tests
     runs-on: ubuntu-latest
     env:
-      elasticsearch_version: '7.13.0'
+      # elasticsearch_version: '7.13.0'
       # It's not working to run as daemon
-      # elasticsearch_version: '8.8.0'
+      elasticsearch_version: '8.8.0'
     services:
       postgres:
         image: postgres:latest
@@ -89,13 +89,6 @@ jobs:
         run: |
           sudo apt-get install redis-tools
           redis-cli -h localhost -p 6379 ping
-      
-      # - name: Install Elasticsearch
-      #   uses: miyataka/elasticsearch-github-actions@1
-      #   id: Install-Elasticsearch
-      #   with:
-      #     stack-version: ${{ env.elasticsearch_version }}
-      #     plugins: 'analysis-kuromoji analysis-icu'
       
       - name: Runs Elasticsearch
         id: Runs-Elasticsearch
