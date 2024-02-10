@@ -53,7 +53,6 @@ services:
     ports:
       - 15555:5555
     volumes:
-      # - ${PROJECTS_DIR}/python-CICD-fastapi-basic:/app/FN-BEES-Services
       - ./:/app/FN-Basic-Services
     restart: unless-stopped
     environment:
