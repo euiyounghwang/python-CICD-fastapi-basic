@@ -120,11 +120,11 @@ jobs:
         run: |
           wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${{ env.elasticsearch_version }}-linux-x86_64.tar.gz
           tar -xzf elasticsearch-${{ env.elasticsearch_version }}-linux-x86_64.tar.gz
-          sudo elasticsearch--${{ env.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-stempel;
-          sudo elasticsearch--${{ env.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-ukrainian;
-          sudo elasticsearch--${{ env.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-smartcn;
-          sudo elasticsearch--${{ env.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-phonetic;
-          sudo elasticsearch--${{ env.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-icu;
+          sudo elasticsearch-${{ env.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-stempel;
+          sudo elasticsearch-${{ env.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-ukrainian;
+          sudo elasticsearch-${{ env.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-smartcn;
+          sudo elasticsearch-${{ env.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-phonetic;
+          sudo elasticsearch-${{ env.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-icu;
           
       
       - name: Run Elasticsearch
