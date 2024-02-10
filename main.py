@@ -3,6 +3,7 @@ from starlette.middleware.cors import CORSMiddleware
 from config.log_config import create_log
 from injector import ES_HOST
 import requests
+import json
 
 logger = create_log()
 
@@ -37,7 +38,7 @@ async def info():
 async def get_es_info():
     logger.info(f"get_es_info hosts -> {ES_HOST}")
     response = requests.get(f"{ES_HOST}/_cat/plugins?format=json")
-    logger.info(response.json())
+    logger.info(json.dumps(response.json(), indent=2))
     return response.json()
 
 
