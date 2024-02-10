@@ -34,9 +34,9 @@ jobs:
           
     name: Build and tests
     runs-on: ubuntu-latest
-    # strategy:
-      # matrix:
-        # elasticsearch: ["8.8.0"]
+    strategy:
+      matrix:
+        elasticsearch_version: ["7.13.0"]
         # database-name:
         #   - postgres
         # database-password:
@@ -116,20 +116,20 @@ jobs:
       - name: Install Elasticsearch
         id: Install-Elasticsearch
         run: |
-          wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.8.0-linux-x86_64.tar.gz
-          tar -xzf elasticsearch-8.8.0-linux-x86_64.tar.gz
-          sudo elasticsearch-8.8.0/bin/elasticsearch-plugin install analysis-stempel;
-          sudo elasticsearch-8.8.0/bin/elasticsearch-plugin install analysis-ukrainian;
-          sudo elasticsearch-8.8.0/bin/elasticsearch-plugin install analysis-smartcn;
-          sudo elasticsearch-8.8.0/bin/elasticsearch-plugin install analysis-phonetic;
-          sudo elasticsearch-8.8.0/bin/elasticsearch-plugin install analysis-icu;
+          wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${{ matrix.elasticsearch_version }}-linux-x86_64.tar.gz
+          tar -xzf elasticsearch--${{ matrix.elasticsearch_version }}-linux-x86_64.tar.gz
+          sudo elasticsearch--${{ matrix.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-stempel;
+          sudo elasticsearch--${{ matrix.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-ukrainian;
+          sudo elasticsearch--${{ matrix.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-smartcn;
+          sudo elasticsearch--${{ matrix.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-phonetic;
+          sudo elasticsearch--${{ matrix.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-icu;
           
       
       - name: Run Elasticsearch
         id: Run-Elasticsearch
         run: |
-          ES_JAVA_OPTS="-Xms1g -Xmx1g" elasticsearch-8.8.0/bin/elasticsearch -E http.port=9203 -d
-          sleep 30
+          ES_JAVA_OPTS="-Xms1g -Xmx1g" elasticsearch--${{ matrix.elasticsearch_version }}/bin/elasticsearch -E http.port=9203 -d
+          sleep 10
         # background: true
         
       # - name: Sleep for 30 seconds
