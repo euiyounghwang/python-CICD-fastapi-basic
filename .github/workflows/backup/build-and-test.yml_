@@ -34,7 +34,7 @@ jobs:
           ES_JAVA_OPTS: "-Xms1g -Xmx1g"
         command: sh -c './bin/elasticsearch-plugin install analysis-stempel analysis-ukrainian analysis-smartcn analysis-phonetic analysis-icu --batch'
         ports:
-          - ${{ env.elasticsearch_http_port }} : ${{ env.elasticsearch_http_port }}
+          - 9203:9203
       postgres:
         image: postgres:latest
         env:
