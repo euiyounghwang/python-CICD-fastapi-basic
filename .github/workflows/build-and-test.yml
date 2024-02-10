@@ -38,14 +38,14 @@ jobs:
         # database-port:
         #   - 15432:5432
     services:
-      elasticsearch:
-        image: elasticsearch:8.8.0
-        env:
-          discovery.type: "single-node"
-          xpack.security.enabled: "false"
-          ES_JAVA_OPTS: "-Xms1g -Xmx1g"
-        ports:
-          - 9203:9200
+      # elasticsearch:
+      #   image: elasticsearch:8.8.0
+      #   env:
+      #     discovery.type: "single-node"
+      #     xpack.security.enabled: "false"
+      #     ES_JAVA_OPTS: "-Xms1g -Xmx1g"
+      #   ports:
+      #     - 9203:9200
       postgres:
         image: postgres:latest
         env:
@@ -111,6 +111,13 @@ jobs:
           sudo apt-get install redis-tools
           redis-cli -h localhost -p 6379 ping
       
+      - name: Install Elasticsearch
+        uses: miyataka/elasticsearch-github-actions@1
+        id: Install-Elasticsearch
+        with:
+          stack-version: ${{ env.elasticsearch_version }}
+          plugins: 'analysis-kuromoji analysis-icu'
+            
       # - name: Install Elasticsearch
       #   id: Install-Elasticsearch
       #   run: |
