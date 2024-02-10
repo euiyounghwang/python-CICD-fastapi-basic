@@ -21,9 +21,9 @@ jobs:
     name: Build and tests
     runs-on: ubuntu-latest
     env:
-      # elasticsearch_version: '7.13.0'
+      elasticsearch_version: '7.13.0'
       # It's not working to run as daemon
-      elasticsearch_version: '8.8.0'
+      # elasticsearch_version: '8.8.0'
     # strategy:
     #   matrix:
     #     elasticsearch_version: ["7.13.0"]
@@ -111,35 +111,30 @@ jobs:
           sudo apt-get install redis-tools
           redis-cli -h localhost -p 6379 ping
       
-      - name: Install Elasticsearch
-        uses: miyataka/elasticsearch-github-actions@1
-        id: Install-Elasticsearch
-        with:
-          stack-version: ${{ env.elasticsearch_version }}
-          plugins: 'analysis-kuromoji analysis-icu'
-            
       # - name: Install Elasticsearch
+      #   uses: miyataka/elasticsearch-github-actions@1
       #   id: Install-Elasticsearch
-      #   run: |
-      #     wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${{ env.elasticsearch_version }}-linux-x86_64.tar.gz
-      #     tar -xzf elasticsearch-${{ env.elasticsearch_version }}-linux-x86_64.tar.gz
-      #     sudo elasticsearch-${{ env.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-stempel;
-      #     sudo elasticsearch-${{ env.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-ukrainian;
-      #     sudo elasticsearch-${{ env.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-smartcn;
-      #     sudo elasticsearch-${{ env.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-phonetic;
-      #     sudo elasticsearch-${{ env.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-icu;
+      #   with:
+      #     stack-version: ${{ env.elasticsearch_version }}
+      #     plugins: 'analysis-kuromoji analysis-icu'
+            
+      - name: Install Elasticsearch
+        id: Install-Elasticsearch
+        run: |
+          wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${{ env.elasticsearch_version }}-linux-x86_64.tar.gz
+          tar -xzf elasticsearch-${{ env.elasticsearch_version }}-linux-x86_64.tar.gz
+          sudo elasticsearch-${{ env.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-stempel;
+          sudo elasticsearch-${{ env.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-ukrainian;
+          sudo elasticsearch-${{ env.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-smartcn;
+          sudo elasticsearch-${{ env.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-phonetic;
+          sudo elasticsearch-${{ env.elasticsearch_version }}/bin/elasticsearch-plugin install analysis-icu;
           
       
-      # - name: Run Elasticsearch
-      #   id: Run-Elasticsearch
-      #   run: |
-      #     ES_JAVA_OPTS="-Xms1g -Xmx1g" elasticsearch-${{ env.elasticsearch_version }}/bin/elasticsearch -E http.port=9203 -d
-      #     sleep 10
-      #   # background: true
-        
-      # - name: Sleep for 30 seconds
-      #   run: sleep 30s
-      #   shell: bash
+      - name: Run Elasticsearch
+        id: Run-Elasticsearch
+        run: |
+          ES_JAVA_OPTS="-Xms1g -Xmx1g" elasticsearch-${{ env.elasticsearch_version }}/bin/elasticsearch -E http.port=9203 -d
+          sleep 10
         
       # - name: Start Elasticsearch
       #   uses: ./.gha/Docker/Elasticsearch
