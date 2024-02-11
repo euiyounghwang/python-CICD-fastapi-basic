@@ -1,5 +1,5 @@
 
-name: Python CICD FastAPI
+name: Python-CICD-FastAPI-Basic
 
 # on:
 #   workflow_call:
