@@ -40,6 +40,7 @@ services:
       - xpack.license.self_generated.type=basic
       - action.destructive_requires_name=false
       - http.port=9201
+      - reindex.remote.whitelist=${NODE_WHITE_LIST}
     volumes:
       - data:/usr/share/elasticsearch/data
       - ./Docker/elasticsearch/backup:/usr/share/elasticsearch/backup
