@@ -40,6 +40,8 @@ RUN elasticsearch-plugin install analysis-ukrainian
 RUN elasticsearch-plugin install analysis-smartcn
 RUN elasticsearch-plugin install analysis-phonetic
 RUN elasticsearch-plugin install analysis-icu
+RUN elasticsearch-plugin install analysis-nori
+RUN elasticsearch-plugin install analysis-kuromoji
 
 EXPOSE 9201
 
