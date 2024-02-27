@@ -148,11 +148,9 @@ jobs:
           driver: docker-container     
           
       - name: Login to Docker Hub
-        if: github.event_name != 'pull_request'
         run: echo ${{ secrets.DOCKERHUB_ACCESS_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
     
       - name: Build and push Docker image
-        if: github.event_name != 'pull_request'
         run: |
             docker buildx create --use
             docker buildx build \
