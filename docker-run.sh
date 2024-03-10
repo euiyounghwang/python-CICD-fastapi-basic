@@ -20,7 +20,7 @@ SCRIPTDIR="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 #   fn-platform-basic-api:omni_es
 
 # V.8
-docker run --rm -it -d --publish 9292:9201 --expose 9201 \
+docker run --rm -it -d --publish 9203:9201 --expose 9201 \
   --name fn-platform-omni-data-01 \
   -e node.roles="[data, master]" \
   -e node.name=fn-platform-omni-data-01 \
