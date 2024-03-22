@@ -23,6 +23,7 @@ The key features are:
 https://python-poetry.org/docs/?ref=dylancastillo.co#installing-with-the-official-installer
 ```
 
+
 ### Using Python Virtual Environment
 ```bash
 python -m venv .venv
