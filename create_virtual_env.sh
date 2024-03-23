@@ -11,10 +11,14 @@ function activate_virtual_env() {
     # Create virtualenv
     python -m venv $SCRIPTDIR/$VENV
     
-    source $SCRIPTDIR/$VENV/bin/activate
+    # Python 3.11.7 with Window
+    source $SCRIPTDIR/$VENV/Scripts/activate
+    # source $SCRIPTDIR/$VENV/bin/activate
     echo "Created virtual enviroment >>" + $SCRIPTDIR/$VENV/bin/activate
     
     echo "Create Poetry Environment"
+    # Python 3.11.7 with Window
+    pip install poetry
     poetry install
     echo "Finish Poetry Environment Completely.."
 }

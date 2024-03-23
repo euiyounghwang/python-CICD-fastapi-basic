@@ -13,7 +13,9 @@ export PYTHONDONTWRITEBYTECODE=1
 SCRIPTDIR="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 
 cd $SCRIPTDIR
-source .venv/bin/activate
+# Python 3.11.7 with Window
+source .venv/Scripts/activate
+# source .venv/bin/activate
 
 # --
 # Waiting for ES
