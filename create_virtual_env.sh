@@ -11,9 +11,13 @@ function activate_virtual_env() {
     # Create virtualenv
     python -m venv $SCRIPTDIR/$VENV
     
-    # Python 3.11.7 with Window
-    source $SCRIPTDIR/$VENV/Scripts/activate
-    # source $SCRIPTDIR/$VENV/bin/activate
+     # Python 3.11.7 with Window
+    if [ -d "$VENV/bin" ]; then
+        source $SCRIPTDIR/$VENV/bin/activate
+    else
+        source $SCRIPTDIR/$VENV/Scripts/activate
+    fi
+    
     echo "Created virtual enviroment >>" + $SCRIPTDIR/$VENV/bin/activate
     
     echo "Create Poetry Environment"
