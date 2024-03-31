@@ -26,6 +26,7 @@ services:
       target: omni_es
     ports:
       - 9292:9201
+      - 9203:9201
     # restart: unless-stopped
     environment:
       # v_7
