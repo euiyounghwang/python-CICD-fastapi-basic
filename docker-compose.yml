@@ -25,7 +25,7 @@ services:
       dockerfile: Dockerfile
       target: omni_es
     ports:
-      - 9292:9201
+      - 9200:9201
       - 9203:9201
     # restart: unless-stopped
     environment:
